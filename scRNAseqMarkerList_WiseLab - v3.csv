@@ -1,0 +1,252 @@
+Marker,Cell_Type,Cell_Type2,Subset_Type,Subset_Type2,Paper,Notes
+ACAT2,Fibroblast,T_cell ,Myofibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in all
+MCAM,Fibroblast,,Myofibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+MYLK,Fibroblast,Total PBMC,Myofibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detetcted in basophils and neutrophils
+MYL9,Fibroblast,Total PBMC,Myofibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in eosinophils and neutrophils 
+IL6,Fibroblast,B_Cells,Myofibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in naive B-cell and memory B-cell
+FAP,Fibroblast,,Cancerassociatedfibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+THY1,Fibroblast,,Cancerassociatedfibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+PDPN,Fibroblast,,Cancerassociatedfibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+MMP2,Fibroblast,,Cancerassociatedfibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+PDGFRA,Fibroblast,,Cancerassociatedfibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+TGFB3,Fibroblast,,Cancerassociatedfibroblast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+COL1A1,Fibroblast,Pericytes,,,https://www.nature.com/articles/s41467-021-27619-4#MOESM1,Not detected in immune cells 
+COL1A2,Fibroblast,Pericytes,,,"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,https://www.nature.com/articles/s41467-021-27619-4#MOESM1",Not detected in immune cells 
+DCN,Fibroblast,Basophil ,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in basophils 
+COL13A1,Fibroblast,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+COL6A2,Fibroblast,T_cell,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,"Detected in gdT-cell, MAIT T-cell, memory CD8 T-cell, naive CD8 T-cell"
+CCR7,T_cell,Dendritic,CD4,DC3,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in Naive CD4 T-cells 
+TCF7,T_cell,NK,CD4,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells and NK-cells 
+FOXP3,T_cell,,Tregs,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells 
+IL2RA,T_cell,Basophil,Tregs,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells and Basophils
+GZMA,T_cell,NK,CD8activated,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells and NK-cells 
+GZMB,T_cell,Dendritic ,CD8activated,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells and dendritic cells 
+GZMH,T_cell,,CD8activated,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detetcted in T-cells
+GZMK,T_cell,NK,deltagamma_Tcell,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells and NK-cells 
+PRF1,T_cell,NK,CD8activated,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells and NK-cells 
+PDCD1,T_cell,,CD8exhausted,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells 
+LAG3,T_cell,,CD8exhausted,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells 
+TIGIT,T_cell,,CD8exhausted,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells 
+CTLA4,T_cell,,CD8exhausted,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells 
+CD2,T_cell,NK,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells and NK-cells
+CD4,T_cell,Dendritic ,CD4,,https://support.10xgenomics.com/csv/BloodCell.csv?src=display&lss=biocompare&cnm=&cid=NULL,"Detected in dendritic cells, monocytes, and t-cells "
+CD5,T_cell ,B_cell,CD8,,https://pmc.ncbi.nlm.nih.gov/articles/PMC10475823/,Detected in T cells and some B cells 
+CD3D,T_cell,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells
+CD3E,T_cell,NK,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells and NK-cells
+CD3G,T_cell,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells
+LEF1,T_cell,,CD4_naive,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells
+IL7R,T_cell,NK,CD4,,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,Detected in T-cells and NK-cells
+S100A4,T_cell,,CD4_memory,,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,Detected in all 
+CD8A,T_cell,,CD8,,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,Detected in T-cells
+KRT14,Epithelial,,,,"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,https://www.nature.com/articles/s41467-021-27619-4#MOESM1",Not detected in immune cells
+KRT17,Epithelial,,,,"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,https://www.nature.com/articles/s41467-021-27619-4#MOESM1",Not detected in immune cells
+KRT6A,Epithelial,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells
+KRT5,Epithelial,Dendritic ,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in dendritic cells 
+KRT19,Epithelial,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+KRT8,Epithelial,Dendritic ,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in dedritic cells 
+KRT16,Epithelial,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells
+KRT18,Epithelial,Basophil ,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in basophils 
+KRT6B,Epithelial,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells
+KRT15,Epithelial,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells
+KRT6C,Epithelial,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells
+KRTCAP3,Epithelial,T_cell,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in T-cells and B-cells 
+SFN,Epithelial,Basophil ,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detetcted in Basophils  
+EPCAM,Epithelial,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells
+CD14,Macrophage,Monocyte,,,"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html",Detected in monocytes and granulocytes 
+CD163,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in monocytes and dendritic cells
+CD68,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in monocytes and dendritic cells
+FCGR2A,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in neutrophils 
+CSF1R,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in monocytes 
+CD40,Dendritic,B_cell,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in B-cells
+CD80,Dendritic,memory B_cell,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in memory B-cell and T-reg (low)
+CD83,Dendritic,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in all 
+CMA1,Mast,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+MS4A2,Mast,Basophil,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in basophils 
+TPSAB1,Mast,Basophil,,,"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,https://www.nature.com/articles/s41467-021-27619-4#MOESM1  ",Detected in basophils 
+TPSB2,Mast,Basophil,,,"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,https://www.nature.com/articles/s41467-021-27619-4#MOESM1",Detected in basophils 
+ACAT1,Myocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in all 
+ACTN2,Myocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not Detected in Immune cells 
+MYL2,Myocyte,B_cell,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in B-cells 
+MYH2,Myocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not Detected in immine cells 
+PECAM1,Endothelial,Non-classical monocyte ,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in all 
+VWF,Endothelial,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Not detected in immune cells 
+ENG,Endothelial,Intermediate monocyte,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,"detected in monocytes, dendritic, and NK-cells "
+SLAMF7,B_cell,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in many 
+CD79A,B_cell,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in B-cells 
+BLNK,B_cell,Dendritic ,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in dendritic and B-cells
+FCRL5,B_cell,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5878932/,Detected in B-cells 
+CD79B,B_cell,,,,https://support.10xgenomics.com/csv/BloodCell.csv?src=display&lss=biocompare&cnm=&cid=NULL,Detected in B-cells 
+CSF3R,Neutrophil,,,,https://support.10xgenomics.com/csv/BloodCell.csv?src=display&lss=biocompare&cnm=&cid=NULL,Detected in neutrophils 
+FCGR3B,Neutrophil,,,,https://support.10xgenomics.com/csv/BloodCell.csv?src=display&lss=biocompare&cnm=&cid=NULL,Detected in neutrophils 
+FPR1,Neutrophil,,,,https://support.10xgenomics.com/csv/BloodCell.csv?src=display&lss=biocompare&cnm=&cid=NULL,Detected in neutrophils 
+MNDA,Neutrophil,,,,https://support.10xgenomics.com/csv/BloodCell.csv?src=display&lss=biocompare&cnm=&cid=NULL,Detected in neutrophils 
+NAMPT,Neutrophil,,,,https://support.10xgenomics.com/csv/BloodCell.csv?src=display&lss=biocompare&cnm=&cid=NULL,Detected in neutrophils 
+LYZ,Monocyte,Dendritic ,,,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,Detected in monocytes and dendritic cells
+MS4A7,Monocyte,,FCGR3A+Mono,,"https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,https://www.nature.com/articles/s41467-021-27619-4#MOESM1",Detected in monocytes 
+FCGR3A,Monocyte,,FCGR3A+Mono,,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,Detected in monocytes 
+GNLY,NK,,,,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,Detected in NK cells 
+NKG7,NK,T_cell,,NKT,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,Detected in NK cells and T-cells 
+FCER1A,Dendritic,Basophil ,,,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,Detected mainly in basophils but dendritic cells too 
+CST3,Dendritic,Monocyte,,,https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,Detected in dendritic and monocyte cells 
+PPBP,Platelet,Megakaryocyte,,,"https://satijalab.org/seurat/articles/pbmc3k_tutorial.html,https://www.nature.com/articles/s41467-021-25771-5",Detected some basophils and neutrophils 
+MST1R,Monocyte,,,,https://www.nature.com/articles/s41467-021-27619-4#MOESM1,Not detected in immune cells 
+CD68,Macrophage,Monocyte,,,https://www.nature.com/articles/s41467-021-27619-4#MOESM1,Detected in monocytes and dendritic cells
+CLDN5,Endothelial,,,,https://www.nature.com/articles/s41467-021-27619-4#MOESM1,"Detected in basophils, neutrophils, and t-cells"
+RAMP2,Endothelial,,,,https://www.nature.com/articles/s41467-021-27619-4#MOESM1,Detected in dendritic cells 
+KLRD1,NK,T_cell,,,https://www.nature.com/articles/s41467-021-27619-4#MOESM1,Detected  in NK and T-cells 
+IL3RA,Dendritic,Basophil ,pDC,,https://www.nature.com/articles/s41467-021-27619-4#MOESM1,Detected in basophils 
+RGS5,Pericytes,,,,https://www.nature.com/articles/s41467-021-27619-4#MOESM1,Not detected in immune cells 
+ITGAX,Dendritic,Neutrophil ,cDC,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5775029/,Detected in neutrophils and monocytes 
+CD1C,Dendritic,,mDC,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5775029/,Detected in dendritic cells and B-cells 
+NCAM1,NK,T_cell,,gammadeltaTcell,https://www.nature.com/articles/s41467-021-25771-5,Detected in NK-cells 
+MME,B_cell,Neutrophil ,,,https://www.nature.com/articles/s41467-021-25771-5,Detected in neutrophils 
+CD19,B_cell,,,,https://www.nature.com/articles/s41467-021-25771-5,Detected in B-cells 
+LILRA4,Dendritic,,pDC,,https://www.nature.com/articles/s41467-021-25771-5,Detected in dendritic cells 
+CD34,Progenitor,,,,https://www.nature.com/articles/s41467-021-25771-5,Not detected in immune cells 
+HBB,Erythrocyte,,,,https://www.nature.com/articles/s41467-021-25771-5,Detected in total PBMC 
+HBG2,Erythrocyte,,Fetal_HbRBC,,https://www.frontiersin.org/articles/10.3389/fphys.2022.828700/full,Not detected 
+BTF3,Erythrocyte,,Fetal_HbRBC,,https://www.frontiersin.org/articles/10.3389/fphys.2022.828700/full,Detected in all 
+HBD,Erythrocyte,,Reticulocytes,,https://www.frontiersin.org/articles/10.3389/fphys.2022.828700/full,"Detected in neutrophils, eosinophils, and dendritic cells "
+FAM210B,Erythrocyte,,Reticulocytes,,https://www.frontiersin.org/articles/10.3389/fphys.2022.828700/full,Detected in mostly eosinophils but in all 
+SNCA,Erythrocyte,,Reticulocytes,,https://www.frontiersin.org/articles/10.3389/fphys.2022.828700/full,Detected in dendritic cells
+GATA1,Erythrocyte,,,,https://academic.oup.com/view-large/figure/267860195/nwaa180fig1.jpeg,Detected in eosinophils  
+SGPL1,Neutrophil,Monocyte,,,https://academic.oup.com/view-large/figure/267860195/nwaa180fig1.jpeg,Detected in monocytes and neurtophils 
+GNG11,Megakaryocyte,,,,https://www.nature.com/articles/s41467-019-14118-w,Detected in neutrophils and basophils 
+TCF4,Dendritic,,pDC,,https://www.nature.com/articles/s41467-019-14118-w,Detected in dendritic cells 
+S100A8,Granulocyte,,,,https://www.nature.com/articles/s41467-019-14118-w,Detected in monocytes and neutrophils 
+WDFY4,Dendritic,,mDC1,,https://www.nature.com/articles/s41467-019-14118-w,Detected in dendritic cells 
+CD38,B_cell,T_cell,plasmablast,activatedT_cell,https://www.nature.com/articles/s41467-019-14118-w,"Detected in NK-cells, B cells, and dendritic cells "
+IGHD,B_cell,,,,https://www.nature.com/articles/s41467-019-14118-w,Detected in B- Cells
+TRDC,NK,,deltagamma_Tcell,,https://www.nature.com/articles/s41467-019-14118-w,Detected in NK-cells and gdT-cells
+PF4,Platelet,,,,,Detected in neutrophils 
+CCL5,T_cell,NK,deltagamma_Tcell,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,Detected in T-cells and NK-cells 
+IGKC,B_cell,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,Detected in B-cells 
+MS4A1,B_cell,,naïve,memory,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,Detected in B-cells 
+IGHD,B_cell,,naïve,plasmablast,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,Detected in B-cells 
+CD27,,,B_cell memory(low naïve),,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,Detected in T-cells and B-cells 
+IGLL3P,B_cell,,plasmablast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,cannot find information 
+GUSBP11,B_cell,,plasmablast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,cannot find information 
+TNFRSF17,B_cell,,plasmablast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in B-cells and dendritic cells 
+LOC100130100,B_cell,,plasmablast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,cannot find information 
+IGHE,B_cell,,plasmablast,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,not detected in immune cells 
+KLRB1,T_cell,NK,deltagamma_Tcell,resting,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in t-cells and NK-cells 
+CCL4,NK,,activated,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in t-cells 
+DEFA4,NK,,resting,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in neutrophils 
+FCN1,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,monocytes and neutrophils 
+MS4A6A,Monocyte,Macrophage,M2,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,Detected in monocytes and dendritic cells
+MMP9,Macrophage,,M0,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in neutrophils 
+CYP27A1,Macrophage,,M0,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,Detected in monocytes and neutrophils 
+CXCL9,Macrophage,,M1,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,not detected in immune cells 
+CCL19,Macrophage,,M1,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,not detected in immune cells 
+CXCL10,Macrophage,,M1,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,Detected in monocytes 
+CCL18,Macrophage,,M2,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,not detected in immune cells
+AIF1,Macrophage,Neutrophil,M2,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,"detected in monocytes, neutrophils, and dendritic cells "
+MSR1,Macrophage,,M2,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in monocytes 
+CD1B,Dendritic,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in dendritic cells 
+CD1A,Dendritic,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,"detected in dendritic cells, B-cells, and monocytes "
+HLA-DQA1,Dendritic,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,"detected in dendritic, B-cells, and monocytes "
+CCL22,Dendritic,,activated,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in many but low 
+LAMP3,Dendritic,,activated,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in eosinophils and t-cells 
+CAP3,Mast,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,cannot find information 
+C3AR1,Mast,Eosinophil,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,"detected in basophils, eosinophils,and monocytes"
+IL1B,Mast,,activated,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in neutrophils 
+VNN2,Neutrophil,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5895181/,detected in neutrophils 
+FSCN1,Dendritic,,DC3,,https://www.nature.com/articles/s41422-020-0374-x,detected in dendritic cells
+STMN1,T_cell,,TEM,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7936231/,detected in dendritic cells and t-cells 
+HMGB2,T_cell,,TEM,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7936231/,detected in basophils and in all 
+JAML,T_cell,,EpithelialgammadeltaTcells,,https://pubmed.ncbi.nlm.nih.gov/20813954/,"detected in eosinophils, monocytes, and dendritic cells, and in all "
+XCL1,NK,T_cell,,NKT,https://pubmed.ncbi.nlm.nih.gov/29474842/,detected in NK-cells 
+XCL2,NK,T_cell,,NKT,https://pubmed.ncbi.nlm.nih.gov/29474842/,detected in NK-cells 
+CX3CR1,T_cell,,effectorTcell,,https://www.nature.com/articles/s41467-021-21619-0,detected in monocytes but also in many 
+IFI30,Macrophage,,,,https://onlinelibrary.wiley.com/doi/full/10.1111/jcmm.15758,"detected in monocytes, dendritic cells, and eosinophils "
+TCL1A,B_cell,,naïve,,https://www.nature.com/articles/s41467-021-23355-x,detected in B-cells and dendritic cells 
+CD83,B_cell,,lightzone,,https://www.nature.com/articles/s41467-021-23355-x,detected in B-cells mostly but  in all 
+AICDA,B_cell,,darkzone,,https://www.nature.com/articles/s41467-021-23355-x,detected in B-cells 
+ZNF683,T_cell,NK,tissueresident,,https://www.uniprot.org/uniprotkb/Q8IZ20/entry,detected in T-cells 
+FCER1G,T_cell,,FCER1G+innate_or___ILTCKs,,https://www.nature.com/articles/s41392-022-01061-4,detected in monocytes 
+ITGA2B,Megakaryocytes,,,,https://ashpublications.org/blood/article/138/14/1211/476137/Single-cell-analysis-of-ploidy-and-the,Basophils 
+GP9,Platelet,,,,https://ashpublications.org/blood/article/138/14/1211/476137/Single-cell-analysis-of-ploidy-and-the,detected in basophils and neutrophils 
+GP1BA,Platelet,,,,https://onlinelibrary.wiley.com/doi/full/10.1002/advs.202100921,detected in basophils 
+ITGB3,Megakaryocytes,Platelet,,,https://onlinelibrary.wiley.com/doi/full/10.1002/advs.202100921,detected in basophils and neutrophils 
+PECAM1,Platelet,Endothelial,,,https://doi.org/10.1016/j.exphem.2004.04.002,detected in monocytes and neutrophils 
+SRGN,Mast,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10100501/,detected in neutrophils but also in all 
+HDC,Mast,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10100501/,detected in basophils 
+ITGA2B,Megakaryocytes,,,,https://doi.org/10.1016/j.ehpc.2020.200467,detected in basophils 
+GATA2,Mast,,,,https://www.jacionline.org/article/S0091-6749(22)00294-9/fulltext,detected in basophils 
+MITF ,Mast,,,,https://www.jacionline.org/article/S0091-6749(22)00294-9/fulltext,"detected in monocytes, dendritic cells, basophils"
+CTSG ,Mast,,,,https://www.jacionline.org/article/S0091-6749(22)00294-9/fulltext,detected in dendritic cells 
+ALOX5,Mast,,,,https://www.jacionline.org/article/S0091-6749(22)00294-9/fulltext,detected mostly in basophils but also in many 
+IL13,Mast,,,,https://www.jacionline.org/article/S0091-6749(22)00294-9/fulltext,not detected in immune cells 
+HBG1 ,Erythrocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9065680/,not detected in immune cells 
+BNIP3L,Erythrocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9065680/,detected highly in neutrophils but in all 
+ACVR2B,Erythrocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9065680/,not detected in immune cells 
+HEMGN,Erythrocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9065680/,"deteced in t-cells, basophils, and MK-cells"
+MALAT1,Erythrocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9065680/,no information found
+HBA1,Erythrocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9065680/,detected in neutrophils and dendritic cells 
+HBA2,Erythrocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9065680/,"detected in neutrophils, dendritic cells, and eosinphils "
+FTL,Erythrocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9065680/,"detected in neutrophils and monocytes, but also in all"
+GYPC,Erythrocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9065680/,detected mostly in t-cells but in all 
+B3GAT1,NK,,,,https://onlinelibrary.wiley.com/doi/full/10.1111/cas.15932,detected in t-cells 
+KIR3DL1,NK,T_cell,,,https://onlinelibrary.wiley.com/doi/full/10.1111/cas.15932,detected in t-cells 
+KLRC1,NK,,,,https://onlinelibrary.wiley.com/doi/full/10.1111/cas.15932,detected in NK-cells and t-cells 
+IL2RB,NK,T_cell,,,https://onlinelibrary.wiley.com/doi/full/10.1111/cas.15932,detected in NK-cells and t-cells 
+CCL3,NK,,,,https://onlinelibrary.wiley.com/doi/full/10.1111/cas.15932,"detected in t-cells, neutrophils, eosinophils, and b-cells"
+CD160,NK,T_cell,,CD8,https://onlinelibrary.wiley.com/doi/full/10.1111/cas.15932,detected in t-cells and NK-cells 
+CTSW,NK,T_cell,,CD8,,
+CD28,T_cell,,naïve,,,detected in t-cells
+PTGS2,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in neutrophils 
+ATP2B1,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in all 
+CIITA,Megakaryocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in all 
+CCL2,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in monocytes and eosinophils 
+S100A9,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in neutrophils and monocytes 
+CD86,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,"detected in monocytes, dendritic cells, B-cells "
+VMO1,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,Detected in monocytes  
+HLA-DRA,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,"detected in b-cells, monocytes, and dendritic cells "
+CES1,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7406263/,detected in dendritic cells and monocytes
+CD74,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7406263/,"detected in b-cells, dendritic cells, and monocytes"
+CTSD,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7406263/,detected in all 
+FCGR3A,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7406263/,detected in monocytes 
+NAMPT,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10941536/ ,detected in neutrophils 
+BCL2A1,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10941536/ ,"detected in neutrophils, eosinophils, and monocytes "
+TREM1,Monocyte,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10941536/ ,detected in neutrophils 
+CD36,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in monocytes and dendritic cells 
+TNF ,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,"detected in monocytes, t-cells, but also in all "
+IL1B,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in neutrophils 
+STAT1,Macrophages,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in all 
+IFI6,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,"detected mostly in neutrophils, but in all "
+CD83,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in all 
+IFITM1,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,"detected in NK-cells, T-cells, and neutrophils, eosinophils "
+SPP1,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in neutrophils 
+LPL,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8970681/,detected in monocytes 
+CCL2,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9952989/,detected in monocytes and eosinophils 
+CCL20,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9952989/,detected in t-cells 
+S100A8,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9952989/,detected in neutrophils and monocytes 
+S100A9 ,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9952989/,detected in neutrophils and monocytes 
+LGALS3,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10328414/,"detected in monocytes, dendritic cells, t-cells "
+CD86,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8841343/,"detected in monocytes, dendritic cells, B-cells "
+PTPRC,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8841343/,detected in all 
+FCGR1A,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8841343/,"detected in monocytes, neutrophils, dendritic cells "
+CD68,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8841343/,"detected in monocytes, dendritic cells, and B-cells "
+TFRC,Macrophage,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8841343/,detected in many 
+CD123,Basophil ,,,,https://www.proteinatlas.org/ENSG00000185291-IL3RA/single+cell,
+MCTP1,Basophil ,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10195816/,no information 
+MMP9,Neutrophil,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9712146/,detected in neutrophils 
+CD10,Neutrophil,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9712146/,not detected in immune cells 
+CXCR2,Neutrophil,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9767679/,detected in neutrophils
+G0S2,Neutrophil,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9767679/,detected in neutrophils 
+CD44,Eosinophil,,,,https://doi.org/10.1016/j.jaci.2024.05.014,detected in all 
+CD69,Eosinophil,,,,https://doi.org/10.1016/j.jaci.2024.05.015,"detected in t-cells, NK-cells, and eosinophils "
+CSCL8,Eosinophil,,,,https://doi.org/10.1016/j.jaci.2024.05.016,no information 
+CD161,T_cell,,,,"https://www.ncbi.nlm.nih.gov/gene/3820#:~:text=CD161%20Characterizes%20an%20Inflamed%20Subset,CD161%20receptor%20in%20T%20cells.",
+IGHG1,B_cell,,,,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3089737/,
+MZB1,B_cell,,,,,
+TIM3,T_cell,,,,,
+PD1,T_cell,,,,,
+ITGA4,Bone Marrow Derrived Myleoid,,,,,
+SELL,Bone Marrow Derrived Myleoid,,,,,
+IATPR,T-Cell,,,,,
+CPA3,Mast ,,,,https://www.genecards.org/cgi-bin/carddisp.pl?gene=CPA3,
+TCL1A,B_cell,,naïve,, https://www.proteinatlas.org/ENSG00000100721-TCL1A/single+cell,
+TPSAB1,Mast,,,,https://www.genecards.org/cgi-bin/carddisp.pl?gene=TPSAB1,
+CXCR1,Neutrophil,,,,https://www.proteinatlas.org/ENSG00000163464-CXCR1/single+cell,
+CLC,Mast,,,,,
