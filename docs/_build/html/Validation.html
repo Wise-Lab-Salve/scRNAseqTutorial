@@ -1,0 +1,679 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Validation &#8212; Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Validation';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Comparing Diagnoses" href="ComparingDiagnoses.html" />
+    <link rel="prev" title="Annotation" href="Annotation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="Introduction.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Introduction.html">
+                    IronMatt (Matt Larson Foundation) Single Cell Sequencing Analysis for Undergraduates
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="RawDataProcessing.html">Raw Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QualityControl.html">Quality Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Annotation.html">Annotation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="ComparingDiagnoses.html">Comparing Diagnoses</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial/issues/new?title=Issue%20on%20page%20%2FValidation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Validation.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Validation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Validation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sctype">scType</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-sctype-tool">Setup scType Tool</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sctype-on-their-github-page-has-r-files-that-can-help-with-the-analysis-we-use-the-source-command-to-load-these-premade-scripts-into-our-r">scType on their github page has R files that can help with the analysis. We use the source command to load these premade scripts into our R</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#provide-a-tissue-type-your-data-belongs-to">Provide a tissue type your data belongs to</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-new-identities-with-sctype">Compare new identities with scType</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphing">Graphing</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="validation">
+<h1>Validation<a class="headerlink" href="#validation" title="Link to this heading">#</a></h1>
+<section id="sctype">
+<h2>scType<a class="headerlink" href="#sctype" title="Link to this heading">#</a></h2>
+<p>In order to validate or check your annotations, there are publically available tools. We will show you how to use scType to confirm cell types.</p>
+</section>
+<section id="setup-sctype-tool">
+<h2>Setup scType Tool<a class="headerlink" href="#setup-sctype-tool" title="Link to this heading">#</a></h2>
+<p>scType needs quite a few additional packages, you can install and open as below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">packages</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span>
+  <span class="s2">&quot;dplyr&quot;</span><span class="p">,</span> <span class="s2">&quot;Seurat&quot;</span><span class="p">,</span> <span class="s2">&quot;HGNChelper&quot;</span><span class="p">,</span> <span class="s2">&quot;openxlsx&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;ggraph&quot;</span><span class="p">,</span> <span class="s2">&quot;igraph&quot;</span><span class="p">,</span> <span class="s2">&quot;tidyverse&quot;</span><span class="p">,</span> <span class="s2">&quot;data.tree&quot;</span>
+<span class="p">)</span>
+
+<span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="n">setdiff</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">rownames</span><span class="p">(</span><span class="n">installed</span><span class="o">.</span><span class="n">packages</span><span class="p">())))</span>
+
+<span class="c1"># Load packages</span>
+<span class="n">lapply</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">library</span><span class="p">,</span> <span class="n">character</span><span class="o">.</span><span class="n">only</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+
+<span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s2">&quot;remotes&quot;</span><span class="p">)</span>
+<span class="n">source</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/R/sctype_wrapper.R&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="sctype-on-their-github-page-has-r-files-that-can-help-with-the-analysis-we-use-the-source-command-to-load-these-premade-scripts-into-our-r">
+<h1>scType on their github page has R files that can help with the analysis. We use the source command to load these premade scripts into our R<a class="headerlink" href="#sctype-on-their-github-page-has-r-files-that-can-help-with-the-analysis-we-use-the-source-command-to-load-these-premade-scripts-into-our-r" title="Link to this heading">#</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/R/gene_sets_prepare.R&quot;</span><span class="p">)</span>
+<span class="n">source</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/R/sctype_score_.R&quot;</span><span class="p">)</span>
+<span class="n">source</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/kris-nader/sc-type/master/R/sctype_wrapper.R&quot;</span><span class="p">);</span> 
+</pre></div>
+</div>
+<p>There is no documentation for each command used below, instead the developer has made a tutorial.</p>
+<p><a class="reference external" href="https://github.com/IanevskiAleksandr/sc-type/blob/master/README.md">Click here to visit the documentation for scType</a></p>
+</section>
+<section id="provide-a-tissue-type-your-data-belongs-to">
+<h1>Provide a tissue type your data belongs to<a class="headerlink" href="#provide-a-tissue-type-your-data-belongs-to" title="Link to this heading">#</a></h1>
+<p>e.g. Immune system, Pancreas, Liver,Eye,Kidney,Brain,Lung,Adrenal,Heart,Intestine,Muscle,Placenta,Spleen,Stomach,Thymus</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">db_</span> <span class="o">&lt;-</span> <span class="s2">&quot;https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/ScTypeDB_full.xlsx&quot;</span><span class="p">;</span>
+<span class="n">tissue</span> <span class="o">&lt;-</span> <span class="s2">&quot;Immune system&quot;</span> 
+<span class="n">gs_list</span> <span class="o">&lt;-</span> <span class="n">gene_sets_prepare</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/ScTypeDB_short.xlsx&quot;</span><span class="p">,</span> <span class="s2">&quot;Immune system&quot;</span><span class="p">)</span> 
+
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="compare-new-identities-with-sctype">
+<h1>Compare new identities with scType<a class="headerlink" href="#compare-new-identities-with-sctype" title="Link to this heading">#</a></h1>
+<p>We will rename the object so that we do not edit our current object with proper labels.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seurat_object</span> <span class="o">&lt;-</span> <span class="n">so_v1</span>
+</pre></div>
+</div>
+<p>Prepare Gene Sets from scType with the <code class="docutils literal notranslate"><span class="pre">gene_sets_prepare</span></code> command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gs_list</span> <span class="o">&lt;-</span> <span class="n">gene_sets_prepare</span><span class="p">(</span><span class="n">db_</span><span class="p">,</span> <span class="n">tissue</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Check that our R data is v5</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seurat_package</span> <span class="o">&lt;-</span> <span class="n">isFALSE</span><span class="p">(</span><span class="s1">&#39;counts&#39;</span> <span class="o">%</span><span class="ow">in</span><span class="o">%</span> <span class="n">names</span><span class="p">(</span><span class="n">attributes</span><span class="p">(</span><span class="n">seurat_object</span><span class="p">[[</span><span class="s2">&quot;RNA&quot;</span><span class="p">]])));</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sprintf</span><span class="p">(</span><span class="s2">&quot;Seurat object </span><span class="si">%s</span><span class="s2"> is used&quot;</span><span class="p">,</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">seurat_package</span><span class="p">,</span> <span class="s2">&quot;v5&quot;</span><span class="p">,</span> <span class="s2">&quot;v4&quot;</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>Extract scaled scRNA-seq counts data as it will need to switch format into a matrix</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>scRNAseqData_scaled &lt;- if (seurat_package) as.matrix(seurat_object[[&quot;RNA&quot;]]$scale.data) else as.matrix(seurat_object[[&quot;RNA&quot;]]@scale.data)
+</pre></div>
+</div>
+<p>Run scType with the <code class="docutils literal notranslate"><span class="pre">sctype_score</span></code> command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>es.max &lt;- sctype_score(scRNAseqData = scRNAseqData_scaled, scaled = TRUE, gs = gs_list$gs_positive, gs2 = gs_list$gs_negative)
+</pre></div>
+</div>
+<p>Now that scType was run, we need to compare the cell labels it created to our clusters and labels.<br>
+scType provides a rather long piece of code to extract the clusters and merge with its output.<br>
+We grabbed this code from the scType website <a class="github reference external" href="https://github.com/IanevskiAleksandr/sc-type">IanevskiAleksandr/sc-type</a> and copied it here.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CL_Results &lt;- do.call(&quot;rbind&quot;, lapply(unique(seurat_object@meta.data$seurat_clusters), function(cl){
+       es.max.cl = sort(rowSums(es.max[,rownames(seurat_object@meta.data[seurat_object@meta.data$seurat_clusters==cl, ])]), decreasing = !0)
+       head(data.frame(cluster = cl, type = names(es.max.cl), scores = es.max.cl, ncells = sum(seurat_object@meta.data$seurat_clusters==cl)), 10)
+   }))
+sctype_scores &lt;- CL_Results %&gt;% group_by(cluster) %&gt;% top_n(n = 1, wt = scores)  
+sctype_scores$type[as.numeric(as.character(sctype_scores$scores)) &lt; sctype_scores$ncells/4] &lt;- &quot;Unknown&quot;
+print(sctype_scores[,1:3])
+</pre></div>
+</div>
+<p>Overlay the identified cell types on UMAP plot</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">so_sctype</span> <span class="o">&lt;-</span> <span class="n">run_sctype</span><span class="p">(</span><span class="n">seurat_object</span><span class="p">,</span><span class="n">known_tissue_type</span><span class="o">=</span><span class="s2">&quot;Immune system&quot;</span><span class="p">,</span><span class="n">custom_marker_file</span><span class="o">=</span><span class="s2">&quot;https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/ScTypeDB_full.xlsx&quot;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;sctype_classification&quot;</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Continue overlay and comparison of clusters</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CL_Results &lt;- CL_Results[order(CL_Results$cluster),]; edges = CL_Results; edges$type = paste0(edges$type,&quot;_&quot;,edges$cluster); edges$cluster = paste0(&quot;cluster &quot;, edges$cluster); edges = edges[,c(&quot;cluster&quot;, &quot;type&quot;)]; colnames(edges) = c(&quot;from&quot;, &quot;to&quot;); rownames(edges) &lt;- NULL
+nodes_lvl1 &lt;- sctype_scores[,c(&quot;cluster&quot;, &quot;ncells&quot;)]; nodes_lvl1$cluster = paste0(&quot;cluster &quot;, nodes_lvl1$cluster); nodes_lvl1$Colour = &quot;#f1f1ef&quot;; nodes_lvl1$ord = 1; nodes_lvl1$realname = nodes_lvl1$cluster; nodes_lvl1 = as.data.frame(nodes_lvl1); nodes_lvl2 = c(); 
+</pre></div>
+</div>
+<p>Update colors for each cluster</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ccolss</span> <span class="o">&lt;-</span>  <span class="n">c</span><span class="p">(</span><span class="s2">&quot;aquamarine3&quot;</span><span class="p">,</span> <span class="s2">&quot;darkseagreen2&quot;</span><span class="p">,</span> <span class="s2">&quot;cornflowerblue&quot;</span><span class="p">,</span> <span class="s2">&quot;pink2&quot;</span><span class="p">,</span> <span class="s2">&quot;goldenrod1&quot;</span><span class="p">,</span> <span class="s2">&quot;aquamarine&quot;</span><span class="p">,</span> <span class="s2">&quot;skyblue1&quot;</span><span class="p">,</span><span class="s2">&quot;lightgoldenrod1&quot;</span><span class="p">,</span> <span class="s2">&quot;thistle2&quot;</span><span class="p">,</span><span class="s2">&quot;palevioletred2&quot;</span><span class="p">,</span><span class="s2">&quot;azure3&quot;</span><span class="p">,</span><span class="s2">&quot;orchid1&quot;</span><span class="p">,</span><span class="s2">&quot;navajowhite2&quot;</span><span class="p">,</span><span class="s2">&quot;salmon1&quot;</span><span class="p">,</span><span class="s2">&quot;darkslateblue&quot;</span><span class="p">,</span><span class="s2">&quot;lightcyan3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="graphing">
+<h2>Graphing<a class="headerlink" href="#graphing" title="Link to this heading">#</a></h2>
+<p>Now that the clusters are compared and we have colors that we would like to use, we will make a graph from scType commands.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>for (i in 1:length(unique(CL_Results$cluster))){
+  dt_tmp = CL_Results[CL_Results$cluster == unique(CL_Results$cluster)[i], ]; nodes_lvl2 = rbind(nodes_lvl2, data.frame(cluster = paste0(dt_tmp$type,&quot;_&quot;,dt_tmp$cluster), ncells = dt_tmp$scores, Colour = ccolss[i], ord = 2, realname = dt_tmp$type))
+}
+nodes &lt;- rbind(nodes_lvl1, nodes_lvl2); nodes$ncells[nodes$ncells&lt;1] = 1;
+files_db &lt;- openxlsx::read.xlsx(db_)[,c(&quot;cellName&quot;,&quot;shortName&quot;)]; files_db = unique(files_db); nodes = merge(nodes, files_db, all.x = T, all.y = F, by.x = &quot;realname&quot;, by.y = &quot;cellName&quot;, sort = F)
+
+nodes$shortName[is.na(nodes$shortName)] = nodes$realname[is.na(nodes$shortName)]; nodes = nodes[,c(&quot;cluster&quot;, &quot;ncells&quot;, &quot;Colour&quot;, &quot;ord&quot;, &quot;shortName&quot;, &quot;realname&quot;)]
+
+nodes_v2 &lt;- nodes %&gt;% distinct() ###Can not have cluster column of nodes duplicated
+nodes_v2 &lt;- nodes %&gt;% distinct(cluster, .keep_all = T)
+
+mygraph &lt;- graph_from_data_frame(edges, vertices=nodes_v2)
+
+gggr &lt;- ggraph(mygraph, layout = &#39;circlepack&#39;, weight=I(ncells)) + 
+  geom_node_circle(aes(filter=ord==1,fill=I(&quot;#F5F5F5&quot;), colour=I(&quot;#D3D3D3&quot;)), alpha=0.9) + geom_node_circle(aes(filter=ord==2,fill=I(Colour), colour=I(&quot;#D3D3D3&quot;)), alpha=0.9) +
+  theme_void() + geom_node_text(aes(filter=ord==2, label=shortName, colour=I(&quot;black&quot;), fill=&quot;white&quot;, repel = !1, parse = T, size = I(log(ncells,25)*1.5)))+ geom_node_label(aes(filter=ord==1,  label=shortName, colour=I(&quot;#000000&quot;), size = I(3), fill=&quot;white&quot;, parse = T), repel = !0, segment.linetype=&quot;dotted&quot;)
+</pre></div>
+</div>
+<p>Use this code for the same graph but without cluster labels on each bubble</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gggr &lt;- ggraph(mygraph, layout = &#39;circlepack&#39;, weight = I(ncells)) + 
+  geom_node_circle(aes(filter = ord == 1, fill = I(&quot;#F5F5F5&quot;), colour = I(&quot;#D3D3D3&quot;)), alpha = 0.9) + 
+  geom_node_circle(aes(filter = ord == 2, fill = I(Colour), colour = I(&quot;#D3D3D3&quot;)), alpha = 0.9) +
+  geom_node_text(aes(
+    filter = ord == 2,
+    label = shortName,
+    colour = I(&quot;black&quot;),
+    repel = !1,
+    parse = TRUE,
+    size = I(log(ncells, 25) * 1.5)
+  )) +
+  theme_void()
+</pre></div>
+</div>
+<p>Saving gggr <code class="docutils literal notranslate"><span class="pre">+</span></code> umap to your files</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pdf</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span><span class="s2">&quot;ScTypeGraphwithclusters_v1.pdf&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">DimPlot</span><span class="p">(</span><span class="n">seurat_object</span><span class="p">,</span> <span class="n">reduction</span> <span class="o">=</span> <span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span> <span class="n">repel</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">ccolss</span><span class="p">)</span><span class="o">+</span> <span class="n">gggr</span>
+<span class="n">dev</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Finally, we can open this graph and compare the output.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Annotation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Annotation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ComparingDiagnoses.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Comparing Diagnoses</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Validation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sctype">scType</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-sctype-tool">Setup scType Tool</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sctype-on-their-github-page-has-r-files-that-can-help-with-the-analysis-we-use-the-source-command-to-load-these-premade-scripts-into-our-r">scType on their github page has R files that can help with the analysis. We use the source command to load these premade scripts into our R</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#provide-a-tissue-type-your-data-belongs-to">Provide a tissue type your data belongs to</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-new-identities-with-sctype">Compare new identities with scType</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphing">Graphing</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sofia Neary, Kenia Viri, Jackson Brenek, Jacquie Tremblay, Isaac Rivera and Jillian Wise, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

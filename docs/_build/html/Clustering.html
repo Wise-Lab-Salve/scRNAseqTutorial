@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Clustering &#8212; Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Clustering';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Annotation" href="Annotation.html" />
+    <link rel="prev" title="Quality Control" href="QualityControl.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="Introduction.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Introduction.html">
+                    IronMatt (Matt Larson Foundation) Single Cell Sequencing Analysis for Undergraduates
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="RawDataProcessing.html">Raw Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QualityControl.html">Quality Control</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Annotation.html">Annotation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Validation.html">Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="ComparingDiagnoses.html">Comparing Diagnoses</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial/issues/new?title=Issue%20on%20page%20%2FClustering.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Clustering.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Clustering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-which-pca-s-to-utilize">Determining which PCA’s to utilize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-similar-cells-and-clustering">Determining similar cells and clustering</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="clustering">
+<h1>Clustering<a class="headerlink" href="#clustering" title="Link to this heading">#</a></h1>
+<p>The blood system is a combination of many cell types, in order to determine what broad cell categories are present we need to capture differences and similarities in the RNA expression.
+By clustering (grouping) cells together we can better capture which cells are present. We will use variable features, principle component analysis, k-nearest neighbors algorithms and plot the results in 2 dimension by UMAP.</p>
+<p><code class="docutils literal notranslate"><span class="pre">FindVariableFeatures()</span></code> will find the top 2000 genes with most difference between all cells. <br>
+<a class="reference external" href="https://satijalab.org/seurat/reference/findvariablefeatures">Click here to visit the documentation for the Find Variable Features)</a> <br></p>
+<p><code class="docutils literal notranslate"><span class="pre">selection.method=</span> <span class="pre">&quot;vst&quot;</span></code> : tells Seurat how to calculate which genes are most variable, we are asking it to use variance stabilizing transformation to normalize the genes before starting the analysis.<br />
+<code class="docutils literal notranslate"><span class="pre">nfeatures=</span> <span class="pre">2000</span></code>: tells Seurat how many variable genes to keep, in this case we are keeping 2000 genes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">so</span> <span class="o">&lt;-</span> <span class="n">FindVariableFeatures</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">selection</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;vst&quot;</span><span class="p">,</span> <span class="n">nfeatures</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">)</span> 
+<span class="n">so</span>
+</pre></div>
+</div>
+<p>Next we use will apply principle component analysis (PCA). To reduce the number of variables we are looking at from the list of 2000 genes. <br>
+PCA compresses thousands of gene measurements into a small number of components that capture the main differences between cells. This is done to find groups of similar cells and makes the data set easier to analyze. <br>
+PCA continues making smaller groups of genes that continue to differentiate samples using the initial 2000 variable genes.</p>
+<p>We use the command <code class="docutils literal notranslate"><span class="pre">RunPCA()</span></code>
+<a class="reference external" href="https://satijalab.org/seurat/reference/runpca">Click here to visit the documentation for RunPCA)</a> <br></p>
+<p><code class="docutils literal notranslate"><span class="pre">features</span> <span class="pre">=</span> <span class="pre">VariableFeature()</span></code> : tells Seurat which variable genes to use for PCA from our command run above.
+<img alt="PCAdescription.png" src="_images/PCAdescription.png" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">so</span> <span class="o">&lt;-</span> <span class="n">RunPCA</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">VariableFeatures</span><span class="p">(</span><span class="nb">object</span> <span class="o">=</span> <span class="n">so</span><span class="p">))</span>
+<span class="n">DimHeatmap</span><span class="p">(</span><span class="n">so</span><span class="p">,</span><span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">balanced</span> <span class="o">=</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this plot we can see the first set of genes from our 2000 that differentiate two groups of cells. Each row is a gene and each column is a cell, with the yellow being highest expression of the gene.</p>
+<section id="determining-which-pca-s-to-utilize">
+<h2>Determining which PCA’s to utilize<a class="headerlink" href="#determining-which-pca-s-to-utilize" title="Link to this heading">#</a></h2>
+<p>Next we need to determine how many of the 40 principle components we created to use to compare cells further. <br>
+We will determine how many PCAs to include in clustering cells through two algorithms and visualizations, the <code class="docutils literal notranslate"><span class="pre">JackStraw</span></code> and <code class="docutils literal notranslate"><span class="pre">Elbow</span></code> plots. <br>
+<code class="docutils literal notranslate"><span class="pre">JackStraw</span></code> and <code class="docutils literal notranslate"><span class="pre">Elbow</span></code> plots evaluate which principal components are significant in the data. <br></p>
+<p><a class="reference external" href="https://satijalab.org/seurat/reference/jackstraw">Click here to visit the documentation for JackStraw()</a> <br>
+For the <code class="docutils literal notranslate"><span class="pre">Jackstraw()</span></code> command <br>
+<code class="docutils literal notranslate"><span class="pre">Num.replicate</span> <span class="pre">=</span> <span class="pre">100</span></code> : number of permutations used to estimate significance
+<code class="docutils literal notranslate"><span class="pre">Dims</span> <span class="pre">=</span> <span class="pre">40</span></code> : tests the first 40 PCs</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ScoreJackStraw()</span></code> command calculates p-values for each PC based on permutation.<a class="reference external" href="https://satijalab.org/seurat/reference/scorejackstraw">Click here to visit the documentation for ScoreJackStraw()</a> <br></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">JackstrawPlot()</span></code> command visualize the results by showing how much each PCA contributes to signifcance by falling off the vertical axis with less significance.<a class="reference external" href="https://satijalab.org/seurat/reference/jackstrawplot">Click here to visit the documentation for JackStrawPlot()</a> <br></p>
+<p>If you would like to save the directory to your computer you can set a location for plots with:
+<code class="docutils literal notranslate"><span class="pre">plot.dir</span> <span class="pre">&lt;-</span> <span class="pre">&quot;set</span> <span class="pre">location</span> <span class="pre">on</span> <span class="pre">your</span> <span class="pre">computer</span> <span class="pre">here&quot;</span></code></p>
+<p>and use the <code class="docutils literal notranslate"><span class="pre">pdf()</span></code> command followed by an end to what goes in the pdf <code class="docutils literal notranslate"><span class="pre">dev.off()</span></code>
+<a class="reference external" href="https://www.rdocumentation.org/packages/grDevices/versions/3.6.2/topics/pdf">Click here to visit the documentation for R’s pdf() command</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">so</span> <span class="o">&lt;-</span> <span class="n">JackStraw</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">num</span><span class="o">.</span><span class="n">replicate</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span> <span class="c1">##running now</span>
+<span class="n">so</span> <span class="o">&lt;-</span> <span class="n">ScoreJackStraw</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">JackStrawPlot</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="mi">40</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="o">.</span><span class="n">dir</span> <span class="o">&lt;-</span> <span class="s2">&quot;set location on your computer here&quot;</span>
+<span class="n">pdf</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="s2">&quot;JackStraw_v1.pdf&quot;</span><span class="p">))</span>
+<span class="n">JackStrawPlot</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">dev</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We can also use an Elbow plot to see how much each PCA contributes to differentiating cell types. <br>
+In this plot the x-axis is the PCA and the y-axis shows contributions to significantly differentiating cells types, and we try to find the elbow (like the bend in your arm)
+<img alt="TutorialElbowPlotExample.png" src="_images/TutorialElbowPlotExample.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">ndims</span> <span class="pre">=</span> <span class="pre">40</span></code> : tests the first 40 PCs.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ElbowPlot</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">ndims</span> <span class="o">=</span> <span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Save this plot as a <code class="docutils literal notranslate"><span class="pre">pdf()</span></code> in <code class="docutils literal notranslate"><span class="pre">plot.dir</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pdf</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="s2">&quot;ElbowPlot_v1.pdf&quot;</span><span class="p">))</span>
+<span class="n">ElbowPlot</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">ndims</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">dev</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This plot is a ranking of principle components based on the percentage of variance explained by each one. We can observe an elbow around PC9, suggesting that the a strong signal is found in the first 9 PCs.<br></p>
+<p>There are also tools that other programmers have developed that use many mathematical statistical models to
+determine how many PCAs to include in clustering cells by summarizing many gene expressions into a few principal components.<br>
+<code class="docutils literal notranslate"><span class="pre">findPC()</span></code> is a command created by Haotian Zhuang, et al to compare different methods of estimating the best principle component numbers to use.<br>
+You can use the <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> option to pick a model as seen below we try the piecewise linear model, but you can also run all models and see the most selected PCA number.
+<a class="reference external" href="https://htmlpreview.github.io/?https://github.com/haotian-zhuang/findPC/blob/main/vignettes/UserManual.html">Click here to visit the documentation for findPC()</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>install.packages(&quot;findPC&quot;)
+
+library(&quot;findPC&quot;)
+
+findPC(sdev = so@reductions$pca@stdev, number = 40, &quot;piecewise linear model&quot;, aggregate = NULL, figure = TRUE)
+
+findPC(sdev = so@reductions$pca@stdev, number = 40, &quot;all&quot;, aggregate = NULL, figure = FALSE)
+
+</pre></div>
+</div>
+<p>After looking at the elbow plot and multiple algorithms, we will use 9 as our dimensions moving forward.</p>
+</section>
+<section id="determining-similar-cells-and-clustering">
+<h2>Determining similar cells and clustering<a class="headerlink" href="#determining-similar-cells-and-clustering" title="Link to this heading">#</a></h2>
+<p>To begin comparing each cell and creating groups of similar ones (clusters), we begin with the command <code class="docutils literal notranslate"><span class="pre">FindNeighbors()</span></code>.<br />
+<a class="reference external" href="https://satijalab.org/seurat/reference/findneighbors">Click here to visit the documentation for FindNeighbors()</a></p>
+<p>Think of this like building a social network of cells. Each cell is compared to others based on gene expression, and cells that are the most similar become “neighbors.”
+<br></p>
+<p>Briefly, these methods embed cells in a graph structure and then attempt to partition the graph and cells into highly interconnected ‘communities’.<br>
+for the <code class="docutils literal notranslate"><span class="pre">dim</span></code> option we will want to use 1 through the number we selected. From our data, we chose the number 9.</p>
+<p>For the <code class="docutils literal notranslate"><span class="pre">FindClusters()</span></code> command it will use the neighbors and determine groups of cells that are similar resolution is a value to determine how much to separate cells into different clusters, the higher the number the more groups you will get. <br>
+<a class="reference external" href="https://satijalab.org/seurat/reference/findclusters">Click here to visit the documentation for FindClusters()</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">so</span> <span class="o">&lt;-</span> <span class="n">FindNeighbors</span><span class="p">(</span><span class="nb">object</span> <span class="o">=</span> <span class="n">so</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">so</span> <span class="o">&lt;-</span> <span class="n">FindClusters</span><span class="p">(</span><span class="nb">object</span> <span class="o">=</span> <span class="n">so</span><span class="p">,</span> <span class="n">resolution</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">so</span>
+</pre></div>
+</div>
+<p>In order for us to see the groups, we use a Uniform Manifold Approximation and Projection (UMAP).<br>
+This is a way to take very complicated data with many measurements and compress it into a 2-D plot so we can see patterns and groups.
+<img alt="TutorialUMAPExample.png" src="_images/TutorialUMAPExample.png" />
+<a class="reference external" href="https://satijalab.org/seurat/reference/runumap">Click here to visit the documentation for RunUMAP()</a>
+<br>
+These ‘communities’ are then run in the <code class="docutils literal notranslate"><span class="pre">Dimplot()</span></code> command in order to visualize the clusters.
+<a class="reference external" href="https://satijalab.org/seurat/reference/dimplot">Click here to visit the documentation for DimPlot()</a></p>
+<p>Because your pca data is still in the seurat object we will choose which to plot with the <code class="docutils literal notranslate"><span class="pre">reduction=</span> <span class="pre">option.</span> <span class="pre">&quot;pca&quot;</span> <span class="pre">or</span> <span class="pre">&quot;umap&quot;</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">so</span> <span class="o">&lt;-</span> <span class="n">RunUMAP</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">DimPlot</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">reduction</span> <span class="o">=</span> <span class="s2">&quot;umap&quot;</span><span class="p">)</span>
+
+<span class="n">pdf</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span><span class="s2">&quot;microfluidics_pediatricblood_filtered_dim9_UMAP.pdf&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+<span class="n">DimPlot</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">reduction</span> <span class="o">=</span> <span class="s2">&quot;umap&quot;</span><span class="p">)</span>
+<span class="n">dev</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We can also test to see if cells from different samples group together, if we are looking a biological versus technical difference, we expect to see groups with many samples within it. <br></p>
+<p>We will make a column in our metadata called <code class="docutils literal notranslate"><span class="pre">samp</span></code> to extract the sample names, with the regular expression command <code class="docutils literal notranslate"><span class="pre">gsub</span></code> to grab everything after a <code class="docutils literal notranslate"><span class="pre">-</span></code> in the cell IDs.<br>
+To create a column we will use the base R syntax <code class="docutils literal notranslate"><span class="pre">$</span></code> combined with the new name and <code class="docutils literal notranslate"><span class="pre">&lt;-</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>so$samp &lt;- gsub(&#39;.*-&#39;,&quot;&quot;,colnames(so))
+
+</pre></div>
+</div>
+<p>Now you can view your metadata to look at the new column you made.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">View</span><span class="p">(</span><span class="n">so</span><span class="nd">@meta</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, we will use the <code class="docutils literal notranslate"><span class="pre">group.by</span></code> option in DimPlot to color not by cluster number but by sample.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DimPlot</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">reduction</span> <span class="o">=</span> <span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">.</span><span class="n">by</span> <span class="o">=</span> <span class="s2">&quot;samp&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can then save our new seurat structure with all the PCA, umap and sample information to our computers.</p>
+<details>
+<summary> What would the code be to create a umap using the Dimplot command clustered by orig.ident column in the meta.data?</summary>
+<p>DimPlot(so, reduction = “umap”, <a class="reference external" href="http://group.by">group.by</a> = “orig.ident”)<br></p>
+</details>
+<br>
+<br>
+<p>To save your object now that you have added all these additional levels of analysis, we will use R’s <code class="docutils literal notranslate"><span class="pre">saveRDS()</span></code> command, which saves any data object as an R object for future loading.<br>
+<a class="reference external" href="https://www.geeksforgeeks.org/r-language/saverds-and-readrds-functions-in-r/">Click here to visit a public blog on using saveRDS()</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">saveRDS</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">paste</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span><span class="s2">&quot;tutorial_microfluidics_pediatricblood_filtered_UMAP9_v1.rds&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This Tutorial was created by the WiseLab of Salve Regina University through the support of the Matt Larson Foundation and
+the NIH Career Development Award through the Rhode Island - INBRE.
+<a class="reference external" href="https://ironmatt.org/">To learn more about the Matt Larson Foundation</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="QualityControl.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quality Control</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Annotation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Annotation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-which-pca-s-to-utilize">Determining which PCA’s to utilize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-similar-cells-and-clustering">Determining similar cells and clustering</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sofia Neary, Kenia Viri, Jackson Brenek, Jacquie Tremblay, Isaac Rivera and Jillian Wise, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

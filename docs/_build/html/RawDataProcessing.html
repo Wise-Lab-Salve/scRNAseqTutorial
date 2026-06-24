@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Raw Data Processing &#8212; Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'RawDataProcessing';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quality Control" href="QualityControl.html" />
+    <link rel="prev" title="IronMatt (Matt Larson Foundation) Single Cell Sequencing Analysis for Undergraduates" href="Introduction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="Introduction.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Introduction.html">
+                    IronMatt (Matt Larson Foundation) Single Cell Sequencing Analysis for Undergraduates
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Raw Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QualityControl.html">Quality Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Annotation.html">Annotation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Validation.html">Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="ComparingDiagnoses.html">Comparing Diagnoses</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial/issues/new?title=Issue%20on%20page%20%2FRawDataProcessing.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/RawDataProcessing.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Raw Data Processing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-a-sequencer-produce">What does a Sequencer Produce?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-alignment">What is alignment?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-samples">Multiple Samples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-your-counts-table-into-seurat-for-analysis">Reading your counts table into Seurat for Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#if-you-have-your-own-raw-data">If you have your own Raw Data</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="raw-data-processing">
+<h1>Raw Data Processing<a class="headerlink" href="#raw-data-processing" title="Link to this heading">#</a></h1>
+<p>In this workshop we will not perform the raw data processing, but it is essential to understand the process that gets you to a gene counts table per individual cell.</p>
+<section id="what-does-a-sequencer-produce">
+<h2>What does a Sequencer Produce?<a class="headerlink" href="#what-does-a-sequencer-produce" title="Link to this heading">#</a></h2>
+<p>A sequencer produces a FASTQ file, which is a text based format that stores DNA sequence data. It is the standard format of raw data representing the reading of each RNA loaded (reads), and includes details about the sequence of bases, the quality of the base calls from the camera in the sequencer, and the technical sequencing run.</p>
+<p>Each entry in a FASTQ file consists of 4 lines:</p>
+<p>A sequence identifier with information about the sequence run and cluster.</p>
+<p>The sequence.</p>
+<p>A separator line with a plus (+) sign.</p>
+<p>Numerical quality scores of the sequence from the camera represented as ASCII characters.</p>
+<p>For the fragments of RNA and their copies, the sequence is present in the FASTQ. However, we don’t know where in the human genome the sequence came from and which gene the original RNA strand was sequenced came from. Thus, we have to perform alignment.</p>
+</section>
+<section id="what-is-alignment">
+<h2>What is alignment?<a class="headerlink" href="#what-is-alignment" title="Link to this heading">#</a></h2>
+<p>Alignment is the process of taking the short sequence information from DNA or RNA obtained through a sequencing machine and arranging them to match those found in a control (or reference) genome, such as the known human genome, to identify regions of similarity. This will identify where each sequence came from and additionaly identify mismatches and gaps in the sequence comparisons. Since the human genome has over 3 billion bases, the process requires computers and bioinformatics knowledge.</p>
+<p>Although, there are many computational alignment tools for RNA sequencing data, the data you will work with came from 10X genomics droplets and the company 10X has it’s own alignment tool cellranger.</p>
+<p><a class="reference external" href="https://www.10xgenomics.com/support/software/cell-ranger/latest">Click here to see the cellranger full documentation page</a></p>
+<p>First cellranger removes any read (the digital record of an RNA fragment inserted into the sequencers and its obtained nucleotide order) where the barcode (its unique identifier for which cell it came from) attached to it is invalid.</p>
+<p>It then determines where in the genome each fragment may have come from and scores its confidence, called mapping. Unmapped reads or those with low confidence are removed. It then determines if the RNA may have come from an intron(a non-coding section of DNA or RNA), which is not expected and the user can remove these.</p>
+<p><img alt="SC3pGEX-algo-diagramn.png" src="_images/SC3pGEX-algo-diagram.png" />
+Image Source 10X Genomics</p>
+<p>Cellranger then removes reads that map to more than 1 gene in the genome as it is less confident in its mapping. It then removes any read where the barcode (not for which cell it came from but its unique fragment code) is low quality.</p>
+<p>Finally, it removes information from droplets it believes are empty and do not contain a cell.</p>
+</section>
+<section id="multiple-samples">
+<h2>Multiple Samples<a class="headerlink" href="#multiple-samples" title="Link to this heading">#</a></h2>
+<p>If you have multiple samples present in your sequencing output, you will want to combine them all. Also, if due to the nature of your sample collection you sequenced samples on different days/runs, you will also want to combine them. This is called aggregation.</p>
+<p>Cellranger is a command used to process raw data sequencing reads from a single cell experiment into a usable gene expression matrix where rows represent genes and columns represent individual cells. To aggregate you would utilize the cellranger aggr command. Cell ranger aggr aggregates outputs from multiple runs of cellranger count, normalizing those runs to the same sequence depth. The aggr pipeline can be used to combine data from multiple samples.</p>
+<p>At the end of this raw data processing, you will have transformed your sequencing machine output (known as lane-demultiplexed FASTQ files) into structured formats like a count matrix for easier analysis.</p>
+<p><img alt="overview_raw_data_processing.jpg" src="_images/overview_raw_data_processing.jpg" />
+Image Source Theislab</p>
+</section>
+<section id="reading-your-counts-table-into-seurat-for-analysis">
+<h2>Reading your counts table into Seurat for Analysis<a class="headerlink" href="#reading-your-counts-table-into-seurat-for-analysis" title="Link to this heading">#</a></h2>
+<p>Seurat is a language extenstion or package in R that analyzes single cell RNA sequencing data from counts tables.
+Seurat can identify cells with similar RNA counts across all genes and group them into something called clusters using comparisons of the RNA expression.</p>
+<p>To use Seurat open your RStudio with R Console and run</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#39;Seurat&#39;</span><span class="p">)</span><span class="w"> </span><span class="c1">###This will install Seurat as a package###</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">Seurat</span><span class="p">)</span><span class="w"> </span><span class="c1">###This will then load the library of language into your current environment</span>
+</pre></div>
+</div>
+<p>In typical analyses we use the command read10X().
+Please navigate to Salve Regina Universities Wise Lab github page and download todays Seurat counts matrix at
+[Click here to download today’s Seurat Object] (<a class="github reference external" href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial">Wise-Lab-Salve/scRNAseqTutorial</a>)</p>
+<p>Download the files in data folder.
+The files should be saved in your Downloads folder (or wherever your browser saves downloaded files).</p>
+<p>Open R or RStudio and check your current working directory. Run the following command:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">getwd</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will show the folder where R is currently looking for files. For example: “/Users/yourname/Documents”</p>
+<p>Move the downloaded file from your Downloads folder to the working directory shown in the previous step.</p>
+<p>Now let us open the data, this function imports the count matrix generated by the 10x Cell Ranger pipeline into the analysis environment for further processing.
+The command readRDS() will load in any R object if you give proper directory location.
+Paste will stick together all the character strings you created above.
+Separate option tells you what character is needed between each such as a space, here we would like nothing between them.</p>
+<div class="highlight-{r notranslate"><div class="highlight"><pre><span></span>data.dir &lt;- &quot;copy and paste the results from your getwd() command above here&quot;
+data &lt;- &quot;HealthyDonor_Test1234.combinedall.rds&quot;
+
+so &lt;- readRDS(paste(data.dir, data, sep = &quot;&quot;))
+so
+</pre></div>
+</div>
+<p>As you can see from the output this is a complex data structure but has 24175 features (or genes the remained after loading in) and 40000 cells. <br>
+This data structure is called a seurat object, this way of organizing data makes use of many precreated functions by the Seurat authors. <br>
+<a class="reference external" href="https://satijalab.github.io/seurat-object/reference/CreateSeuratObject.html">Click here to see documentation on the Seurat Object</a> <br>
+The authors describe a seurat object as “The object serves as a container that contains both data (like the count matrix) and analysis (like PCA, or clustering results) for a single-cell dataset.”</p>
+</section>
+<section id="if-you-have-your-own-raw-data">
+<h2>If you have your own Raw Data<a class="headerlink" href="#if-you-have-your-own-raw-data" title="Link to this heading">#</a></h2>
+<p>(We will not run this code it is for your future needs)<br>
+If you did not already have a counts matrix in seurat and were working with rawdata you would run the following command.</p>
+<p>rawdata_f &lt;- Read10X(‘/Place here the folder directory in which your cellranger output is/outs/count/filtered_feature_bc_matrix/’,<br />
+gene.column = 2,  cell.column = 1,  unique.features = TRUE,  strip.suffix = FALSE)</p>
+<p>From here, you would convert the raw data into a data structure called a seurat object, this way of organizing data makes use of many precreated functions by the Seurat authors.
+<a class="reference external" href="https://satijalab.github.io/seurat-object/reference/CreateSeuratObject.html">Click here to see documentation on the Seurat Object</a></p>
+<p>so &lt;- CreateSeuratObject(rawdata_f,  min.cells = 2,  min.features = 1,  names.delim = “-“,<br />
+names.field = 1)<br />
+rawdata_f: This is your raw data from the cellranger alignment</p>
+<p>min.cells = 2: This means a gene must be expressed (non-zero value) in at least 2 cells to be included in the analysis. Genes expressed in fewer cells are filtered out because they may not provide useful information.</p>
+<p>min.features = 1: This means a cell must express at least 1 gene to be included in the analysis.
+Cells with no detected gene expression are removed because they are likely empty or low-quality.</p>
+<p>names.delim = “-”: and
+names.field = 1:</p>
+<p>This specifies which part of the column name (after splitting by the delimiter) should be used as the cell name.
+For example, if the column name is Sample1-Cell1:
+Splitting by “-” gives Sample1 and Cell1.
+names.field = 1 means the first part (Sample1) will be used as the cell name.</p>
+<p>Summary for Undergraduates:
+min.cells: Keeps genes that are expressed in at least this many cells.
+min.features: Keeps cells that express at least this many genes.
+names.delim: Tells Seurat how to split column names if they have a separator (like “-“).
+names.field: Chooses which part of the column name to use as the cell name after splitting.
+This command ensures that only high-quality data is included in your analysis.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Introduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">IronMatt (Matt Larson Foundation) Single Cell Sequencing Analysis for Undergraduates</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="QualityControl.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Quality Control</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-a-sequencer-produce">What does a Sequencer Produce?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-alignment">What is alignment?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-samples">Multiple Samples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-your-counts-table-into-seurat-for-analysis">Reading your counts table into Seurat for Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#if-you-have-your-own-raw-data">If you have your own Raw Data</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sofia Neary, Kenia Viri, Jackson Brenek, Jacquie Tremblay, Isaac Rivera and Jillian Wise, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

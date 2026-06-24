@@ -1,0 +1,759 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Comparing Diagnoses &#8212; Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ComparingDiagnoses';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Validation" href="Validation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="Introduction.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Introduction.html">
+                    IronMatt (Matt Larson Foundation) Single Cell Sequencing Analysis for Undergraduates
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="RawDataProcessing.html">Raw Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QualityControl.html">Quality Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Annotation.html">Annotation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Validation.html">Validation</a></li>
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Comparing Diagnoses</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial/issues/new?title=Issue%20on%20page%20%2FComparingDiagnoses.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/ComparingDiagnoses.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Comparing Diagnoses</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-expression-analysis-normal-versus-eosinophilic-esophagitis-diagnoses">Differential expression analysis: normal versus eosinophilic esophagitis diagnoses</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-binary-diagnosis-group">Create a binary diagnosis group</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-a-cell-type-of-interest-and-subset-the-data">Select a cell type of interest and subset the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-differential-expression-analysis">Run differential expression analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-the-differential-expression-results">Format the differential expression results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-top-genes-for-labeling">Select top genes for labeling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-volcano-plot">Make a volcano plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-selected-genes">Visualize selected genes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-selected-genes-with-a-dot-plot">Visualize selected genes with a dot plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-notes">Interpretation notes</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="comparing-diagnoses">
+<h1>Comparing Diagnoses<a class="headerlink" href="#comparing-diagnoses" title="Link to this heading">#</a></h1>
+<section id="differential-expression-analysis-normal-versus-eosinophilic-esophagitis-diagnoses">
+<h2>Differential expression analysis: normal versus eosinophilic esophagitis diagnoses<a class="headerlink" href="#differential-expression-analysis-normal-versus-eosinophilic-esophagitis-diagnoses" title="Link to this heading">#</a></h2>
+<p>In this section, we compare gene expression from one cell type in samples with a normal diagnosis to those with eosiniphilic esophagitis. This is an unbiased differential expression analysis because we are not pre-selecting genes of interest. Instead, we test all detected genes and then visualize the strongest differences.</p>
+<p>We will need a few new libraries</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s2">&quot;tidyr&quot;&quot;)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span>
+<span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s2">&quot;ggrepel&quot;</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">ggrepel</span><span class="p">)</span>
+<span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s2">&quot;dplyr&quot;</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s2">&quot;ggplot2&quot;</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="create-a-binary-diagnosis-group">
+<h3>Create a binary diagnosis group<a class="headerlink" href="#create-a-binary-diagnosis-group" title="Link to this heading">#</a></h3>
+<p>First, we create a simplified metadata column called <code class="docutils literal notranslate"><span class="pre">diagnosis_binary</span></code>. Cells from samples 1 and 4 are from a normal biopsy with no clinical findings while 2 and 3 are from clinical findings of eosinophilic esophagitis.<br>
+We will create a column by accessing the meta.data with &#64; and adding a column with $ and our desired name.<br>
+We will that set that to &lt;- an R ifelse command which will perform one function if something is ture and another if it is false. <br>
+Our True or False statment will be whether the sample name is Stott_1 or Stott4. If true all the rows in the meta.data associated with Stott_1 and Stott4 with have Normal in this column and all other rows will have “EE” for eosinophilic esophagitis.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>so_v1@meta.data$diagnosis_binary &lt;- ifelse(
+  so_v1@meta.data$samp == &quot;1&quot; | so_v1@meta.data$samp == &quot;4&quot;,
+  &quot;Normal&quot;,
+  &quot;EE&quot;
+)
+</pre></div>
+</div>
+</section>
+<section id="select-a-cell-type-of-interest-and-subset-the-data">
+<h3>Select a cell type of interest and subset the data<a class="headerlink" href="#select-a-cell-type-of-interest-and-subset-the-data" title="Link to this heading">#</a></h3>
+<p>Choose a cell type of interest.<br></p>
+<p>This tutorial is written so that you can reuse the same workflow for different cell types.
+Before choosing a cell type, it is helpful to look at the available cell type labels in the Seurat metadata.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">unique</span><span class="p">(</span><span class="n">Idents</span><span class="p">(</span><span class="n">so_v1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>After reviewing the available labels, enter the exact cell type name (as seen in the ouput above) you want to analyze.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">celltype_of_interest</span> <span class="o">&lt;-</span> <span class="s2">&quot;ENTER_CELL_TYPE_HERE&quot;</span>
+</pre></div>
+</div>
+<p>Subset the Seurat object to the selected cell type. Now we create a new Seurat object that contains only cells from the selected cell type.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">so_v2</span> <span class="o">&lt;-</span> <span class="n">subset</span><span class="p">(</span>
+  <span class="n">so_v1</span><span class="p">,</span>
+  <span class="n">idents</span> <span class="o">=</span> <span class="n">celltype_of_interest</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Verify the subset.
+After subsetting, confirm that the new object contains only the desired cell type and inspect the distribution of diagnosis groups.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>levels(Idents(so_v2)) 
+table(so_v2$diagnosis_binary)
+</pre></div>
+</div>
+<p>All subsequent analyses in this tutorial will be performed using the subsetted Seurat object so2, allowing differential expression to be evaluated within a single cell type.</p>
+</section>
+<section id="run-differential-expression-analysis">
+<h3>Run differential expression analysis<a class="headerlink" href="#run-differential-expression-analysis" title="Link to this heading">#</a></h3>
+<p>Seurat uses the active identity class to define groups for comparisons. Here, we tell Seurat to compare cells based on the new <code class="docutils literal notranslate"><span class="pre">diagnosis_binary</span></code> column.</p>
+<div class="highlight-{r notranslate"><div class="highlight"><pre><span></span>Idents(so_v2) &lt;- &quot;diagnosis_binary&quot;
+</pre></div>
+</div>
+<p>Next, we use <code class="docutils literal notranslate"><span class="pre">FindMarkers()</span></code> to compare your cell type from normal samples against EE diagnoses. <br>
+The comparison is: <br></p>
+<p>Normal versus EE</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">poisson</span></code> test is used here because it can be useful for count-like single-cell expression data. The <code class="docutils literal notranslate"><span class="pre">min.pct</span> <span class="pre">=</span> <span class="pre">0.1</span></code> argument keeps genes that are detected in at least 10% of cells in either group. The <code class="docutils literal notranslate"><span class="pre">logfc.threshold</span> <span class="pre">=</span> <span class="pre">0</span></code> argument means that Seurat will test all genes that pass the detection filter, rather than only genes above a fold-change cutoff.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">markers</span> <span class="o">&lt;-</span> <span class="n">FindMarkers</span><span class="p">(</span>
+  <span class="n">so_v2</span><span class="p">,</span>
+  <span class="n">ident</span><span class="mf">.1</span> <span class="o">=</span> <span class="s2">&quot;Normal&quot;</span><span class="p">,</span>
+  <span class="n">ident</span><span class="mf">.2</span> <span class="o">=</span> <span class="s2">&quot;EE&quot;</span><span class="p">,</span>
+  <span class="n">assay</span> <span class="o">=</span> <span class="s2">&quot;RNA&quot;</span><span class="p">,</span>
+  <span class="n">slot</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span>
+  <span class="n">test</span><span class="o">.</span><span class="n">use</span> <span class="o">=</span> <span class="s2">&quot;poisson&quot;</span><span class="p">,</span>
+  <span class="nb">min</span><span class="o">.</span><span class="n">pct</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+  <span class="n">logfc</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="format-the-differential-expression-results">
+<h3>Format the differential expression results<a class="headerlink" href="#format-the-differential-expression-results" title="Link to this heading">#</a></h3>
+<p>The output from <code class="docutils literal notranslate"><span class="pre">FindMarkers()</span></code> stores gene names as row names. For plotting and filtering, it is easier to move the gene names into their own column. <br></p>
+<p>We also calculate a transformed adjusted p-value called <code class="docutils literal notranslate"><span class="pre">logp</span></code>, which is useful for a plot we will make called a volcano plot. Larger <code class="docutils literal notranslate"><span class="pre">logp</span></code> values indicate stronger statistical significance.</p>
+<p>Finally, we classify genes as:<br></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">up_in_Normal</span></code>: higher in normal samples <br></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">up_in_EE</span></code>: higher in non-normal samples <br></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ns</span></code>: not significant by the chosen thresholds <br></p></li>
+</ul>
+<p>The code below uses the %&gt;% operator from the dplyr package. You can think of %&gt;% as meaning “and then”. Rather than creating many intermediate objects, it takes the result of one step and passes it directly to the next. This makes the code read almost like a recipe: <br></p>
+<p>Start with the markers table and then (%&gt;%) <br>
+Move the row names into a new column called gene and then  (%&gt;%) <br>
+Create two new columns called logp and direction. <br></p>
+<p>We use the dplyr mutate() command to add new columns. The column names added are denoted before the = sign. <br>
+The logp column contains the transformed adjusted p-value, calculated as -log10(adjusted p-value). <br>
+The direction column categorizes each gene based on both its fold change and statistical significance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">markers</span> <span class="o">&lt;-</span> <span class="n">markers</span> <span class="o">%&gt;%</span>
+  <span class="n">tibble</span><span class="p">::</span><span class="n">rownames_to_column</span><span class="p">(</span><span class="s2">&quot;gene&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">mutate</span><span class="p">(</span>
+    <span class="n">logp</span> <span class="o">=</span> <span class="o">-</span><span class="n">log10</span><span class="p">(</span><span class="n">p_val_adj</span> <span class="o">+</span> <span class="mf">1e-300</span><span class="p">),</span>
+    <span class="n">direction</span> <span class="o">=</span> <span class="n">case_when</span><span class="p">(</span>
+      <span class="n">avg_log2FC</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;</span> <span class="n">p_val_adj</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="o">~</span> <span class="s2">&quot;up_in_Normal&quot;</span><span class="p">,</span>
+      <span class="n">avg_log2FC</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">p_val_adj</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="o">~</span> <span class="s2">&quot;up_in_EE&quot;</span><span class="p">,</span>
+      <span class="n">TRUE</span> <span class="o">~</span> <span class="s2">&quot;ns&quot;</span>
+    <span class="p">)</span>
+  <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="select-top-genes-for-labeling">
+<h3>Select top genes for labeling<a class="headerlink" href="#select-top-genes-for-labeling" title="Link to this heading">#</a></h3>
+<p>To keep the plot readable, we will only label the top significant genes. Here, we select up to 50 significant genes ranked by adjusted p-value.<br>
+Once again we use the %&gt;% to first take the object we created markers and then filter() it down to only those genes that are not (!=) ns (the not significant label we created) <br>
+and then arrange the results with the smallest significant value first with the nested arrange() and desc() commands from dplyr.<br>
+See some nice visual documentation of using arrange on the dplyr cheatsheet
+<a class="reference external" href="https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf">Click here to visit the visual documentation for the dplyr</a>
+You can see the arrange command on the first page of the cheatsheet in the middle column half way down. <br></p>
+<p>And the (%&gt;%) we will also use the slice_head command found in the visual cheatsheet in the middle row right above arrange() to select the first 50 rows.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">top_genes</span> <span class="o">&lt;-</span> <span class="n">markers</span> <span class="o">%&gt;%</span>
+  <span class="nb">filter</span><span class="p">(</span><span class="n">direction</span> <span class="o">!=</span> <span class="s2">&quot;ns&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">logp</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="n">slice_head</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="make-a-volcano-plot">
+<h3>Make a volcano plot<a class="headerlink" href="#make-a-volcano-plot" title="Link to this heading">#</a></h3>
+<p>A volcano plot shows both the size of the expression difference and the statistical significance for every gene tested between the two groups.<br>
+<img alt="Volcano.png" src="_images/Volcano.png" /></p>
+<p>The x-axis shows average log2 fold change. Genes farther to the right are higher in the normal group, while genes farther to the left are higher in the other diagnosis group.<br></p>
+<p>The y-axis shows <code class="docutils literal notranslate"><span class="pre">-log10(adjusted</span> <span class="pre">p-value)</span></code>. Genes higher on the plot are more statistically significant.</p>
+<p>We will be using the ggplot.<br>
+<a class="reference external" href="https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf">Click here to visit the visual documentation for the ggplot2</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ggplot</span><span class="p">(</span><span class="n">markers</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">avg_log2FC</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">logp</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">direction</span><span class="p">))</span> <span class="o">+</span>
+  <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mf">1.8</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">geom_text_repel</span><span class="p">(</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">top_genes</span><span class="p">,</span>
+    <span class="n">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">gene</span><span class="p">),</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">.</span><span class="n">overlaps</span> <span class="o">=</span> <span class="mi">15</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="n">scale_color_manual</span><span class="p">(</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span>
+      <span class="n">up_in_Normal</span> <span class="o">=</span> <span class="s2">&quot;#B4EEB4&quot;</span><span class="p">,</span>
+      <span class="n">up_in_Other</span> <span class="o">=</span> <span class="s2">&quot;#CD5C5C&quot;</span><span class="p">,</span>
+      <span class="n">ns</span> <span class="o">=</span> <span class="s2">&quot;gray70&quot;</span>
+    <span class="p">)</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="n">geom_vline</span><span class="p">(</span>
+    <span class="n">xintercept</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">linetype</span> <span class="o">=</span> <span class="s2">&quot;dashed&quot;</span><span class="p">,</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="mf">0.4</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="n">geom_hline</span><span class="p">(</span>
+    <span class="n">yintercept</span> <span class="o">=</span> <span class="o">-</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.00001</span><span class="p">),</span>
+    <span class="n">linetype</span> <span class="o">=</span> <span class="s2">&quot;dashed&quot;</span><span class="p">,</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="mf">0.4</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="n">labs</span><span class="p">(</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;Average Log2 Fold Change: Normal versus Other&quot;</span><span class="p">,</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Significance: -Log10 adjusted p-value&quot;</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Differential Gene Expression: Normal versus Eosinophilic Esophagitis&quot;</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="n">theme_minimal</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="visualize-selected-genes">
+<h3>Visualize selected genes<a class="headerlink" href="#visualize-selected-genes" title="Link to this heading">#</a></h3>
+<p>After identifying genes of interest from the differential expression analysis, we can visualize their expression across individual samples.<br>
+Select a few genes from your volcano plot and replace the gene names below with yours of interest.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">upgenes</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span>
+  <span class="s2">&quot;TAOK1&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;IGF2R&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;FAM110A&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;ENSG00000250696&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;RPS29&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;CLEC4OP&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="visualize-selected-genes-with-a-dot-plot">
+<h3>Visualize selected genes with a dot plot<a class="headerlink" href="#visualize-selected-genes-with-a-dot-plot" title="Link to this heading">#</a></h3>
+<p>After identifying genes of interest from the differential expression analysis, we can visualize their expression across diagnosis groups using a dot plot.<br></p>
+<p>In a Seurat <code class="docutils literal notranslate"><span class="pre">DotPlot()</span></code>, the color of each dot shows the average expression of a gene in each group. The size of each dot shows the percentage of cells in that group that express the gene.</p>
+<p><a class="reference external" href="https://satijalab.org/seurat/reference/dotplot">Click here to visit the Seurat documentation for a dotplot</a> <br></p>
+<p>First, create a vector of colors to show low versus high gene expression levels, you may change these to other based on your preference.
+<a class="reference external" href="https://sape.inf.usi.ch/quick-reference/ggplot2/colour">Click here to visit a site that displays many R color codes</a> <br></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">colors2</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;bisque3&quot;</span><span class="p">,</span> <span class="s2">&quot;snow&quot;</span><span class="p">,</span> <span class="s2">&quot;darkred&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create a DotPlot()
+<a class="reference external" href="https://satijalab.org/seurat/reference/dotplot">Click here to visit the documentation for DotPlot</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DotPlot</span><span class="p">(</span>
+  <span class="n">so_v2</span><span class="p">,</span>
+  <span class="n">features</span> <span class="o">=</span> <span class="n">upgenes</span><span class="p">,</span>
+  <span class="n">group</span><span class="o">.</span><span class="n">by</span> <span class="o">=</span> <span class="s2">&quot;diagnosis_bindary&quot;</span>
+<span class="p">)</span> <span class="o">+</span>
+  <span class="n">scale_color_gradientn</span><span class="p">(</span><span class="n">colors</span> <span class="o">=</span> <span class="n">colors2</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">labs</span><span class="p">(</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;Gene&quot;</span><span class="p">,</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Diagnosis&quot;</span><span class="p">,</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;Avg expression&quot;</span><span class="p">,</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="s2">&quot;Pct expressed&quot;</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="n">theme_classic</span><span class="p">()</span> <span class="o">+</span>
+  <span class="n">theme</span><span class="p">(</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">element_text</span><span class="p">(</span><span class="n">angle</span> <span class="o">=</span> <span class="mi">45</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">element_text</span><span class="p">(</span><span class="n">face</span> <span class="o">=</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="mi">12</span><span class="p">),</span>
+    <span class="n">legend</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="mi">11</span><span class="p">)</span>
+  <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="interpretation-notes">
+<h3>Interpretation notes<a class="headerlink" href="#interpretation-notes" title="Link to this heading">#</a></h3>
+<p>Are there any genes that are revealed to be specific to your cell type and the diagnosis? From here you could design follow-up experiments or find public data to further validate your findings.<br>
+You can also visit the Human Tissue Atlas to see if the gene is specific to your cell type!</p>
+<p>Because single-cell data often contain strong patient-to-patient variation, genes identified in this analysis should be interpreted carefully. Follow-up plots by <code class="docutils literal notranslate"><span class="pre">sample_id</span></code> are important because they help distinguish broad biological patterns from effects driven by one or two samples.</p>
+<p>Alternative tests, including MAST or logistic regression, can also be explored. If adjusted p-values are very high, this may reflect limited sample size, strong donor-level variability, low expression of many genes, or the need for pseudobulk analysis at the patient level.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Validation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Validation</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-expression-analysis-normal-versus-eosinophilic-esophagitis-diagnoses">Differential expression analysis: normal versus eosinophilic esophagitis diagnoses</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-binary-diagnosis-group">Create a binary diagnosis group</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-a-cell-type-of-interest-and-subset-the-data">Select a cell type of interest and subset the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-differential-expression-analysis">Run differential expression analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-the-differential-expression-results">Format the differential expression results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-top-genes-for-labeling">Select top genes for labeling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-volcano-plot">Make a volcano plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-selected-genes">Visualize selected genes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-selected-genes-with-a-dot-plot">Visualize selected genes with a dot plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-notes">Interpretation notes</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sofia Neary, Kenia Viri, Jackson Brenek, Jacquie Tremblay, Isaac Rivera and Jillian Wise, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

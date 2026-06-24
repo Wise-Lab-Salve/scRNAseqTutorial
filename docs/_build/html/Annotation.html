@@ -1,0 +1,901 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Annotation &#8212; Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Annotation';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Validation" href="Validation.html" />
+    <link rel="prev" title="Clustering" href="Clustering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="Introduction.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Pediatric Blood Undergraduate Single Cell Tutorial - in R Seurat - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Introduction.html">
+                    IronMatt (Matt Larson Foundation) Single Cell Sequencing Analysis for Undergraduates
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="RawDataProcessing.html">Raw Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QualityControl.html">Quality Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering.html">Clustering</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Annotation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Validation.html">Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="ComparingDiagnoses.html">Comparing Diagnoses</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Wise-Lab-Salve/scRNAseqTutorial/issues/new?title=Issue%20on%20page%20%2FAnnotation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Annotation.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Annotation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-the-wiselab-s-data-object-for-analysis">Download the WiseLab’s Data Object for Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labeling-of-cell-clusters-to-known-blood-based-cell-types">Labeling of cell clusters to known blood-based cell types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-plots-and-cluster-labeling">Feature Plots and Cluster Labeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unbiased-list-of-genes-associated-with-each-cluster-through-seurat-s-findmarkers">Unbiased list of genes associated with each cluster through Seurat’s FindMarkers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-your-file">Save your File</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-gene-information-through-the-use-of-databases">Exploring gene information through the use of databases</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-human-protein-atlas">The Human Protein Atlas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-clusters-6-and-15">Comparison of clusters 6 and 15</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rename-clusters-by-cell-type">Rename Clusters by Cell Type</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-seurat-object">New Seurat Object</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-umap-with-new-seurat-with-cluster-names">Plot UMAP with new Seurat with cluster names</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#save-the-object-with-new-cluster-labels">Save the object with new cluster labels</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#change-colors">Change Colors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-violin-plot-for-others-to-show-major-cell-clusters">Make a violin plot for others to show major cell clusters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-list-of-genes-for-a-violin-plot-to-confirm-choices">Make a list of genes for a Violin plot to confirm choices</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="annotation">
+<h1>Annotation<a class="headerlink" href="#annotation" title="Link to this heading">#</a></h1>
+<section id="download-the-wiselab-s-data-object-for-analysis">
+<h2>Download the WiseLab’s Data Object for Analysis<a class="headerlink" href="#download-the-wiselab-s-data-object-for-analysis" title="Link to this heading">#</a></h2>
+<p>In R, the <code class="docutils literal notranslate"><span class="pre">RunUMAP()</span></code> command provides different graphing positions each time it is run.<br>
+<img alt="TutorialUMAPDifferences.png" src="_images/TutorialUMAPDifferences.png" /></p>
+<p>Instead of having everyone attempt to annotate their unique UMAP, the same data object will be downloaded to annotate together.</p>
+<div class="highlight-{r notranslate"><div class="highlight"><pre><span></span>data2 &lt;- &quot;tutorial_microfluidics_pediatricblood_filtered_UMAP9.rds&quot; 
+  
+so2 &lt;- readRDS(paste(data.dir, data2, sep = &quot;&quot;)) 
+so2 
+</pre></div>
+</div>
+</section>
+<section id="labeling-of-cell-clusters-to-known-blood-based-cell-types">
+<h2>Labeling of cell clusters to known blood-based cell types<a class="headerlink" href="#labeling-of-cell-clusters-to-known-blood-based-cell-types" title="Link to this heading">#</a></h2>
+<p>Now that we have clusters of similar cells, we would like to identify which cell types these are.
+We know that the samples came from blood, so most of the content will be blood and immune cells.
+Given that we have gene expression values for each cell, we can use the average gene expression of each cluster to try and determine the cell type.
+However, this requires biological knowledge of the genes associated with each cell type in the blood. <br>
+The Wise Lab at Salve Regina University has a running database of genes associated with each cell type in literature.
+You can download it from the same github as earlier, move it to your working directory, load it as below and take a peak.</p>
+<div class="highlight-{Load notranslate"><div class="highlight"><pre><span></span>marks &lt;- read.delim(paste(data.dir,&#39;scRNAseqMarkerList_WiseLab - v3.csv&#39;, sep=&quot;&quot;),sep=&quot;,&quot;,header=T, stringsAsFactors = FALSE)
+</pre></div>
+</div>
+<p>Next we want to save the cluster numbers as a column in our Seurat meta.data.<br>
+The meta.data object in Seurat gives additional non-RNA count based information about each cell. For example, if instead of cells and RNA expression counts we had students and their test scores, the meta.data could include school district, classroom, last years grades. <br>
+To pull the current label (numerical) for each cluster, we use Seurat’s <code class="docutils literal notranslate"><span class="pre">Idents()</span></code> command.
+<a class="reference external" href="https://satijalab.github.io/seurat-object/reference/Idents.html">Click here to visit the documentation for Idents()</a><br>
+To add a column to a data frame we can use the <code class="docutils literal notranslate"><span class="pre">$</span></code> symbol following the data structures name.
+The arrow <code class="docutils literal notranslate"><span class="pre">&lt;-</span></code> means “put this into this variable name.” <br>
+Then we can take a list of common genes that differentiate blood cell types and turn them into data through the combine command, <code class="docutils literal notranslate"><span class="pre">c()</span></code>. <br>
+The gene names must be in quotes as they are characters, not commands.</p>
+<div class="highlight-{r notranslate"><div class="highlight"><pre><span></span>so2@meta.data$originalcluster &lt;- Idents(so2)
+
+annotategenes &lt;- c(&quot;CD3E&quot;, &quot;GNLY&quot;,&quot;CD79A&quot;, &quot;TCF7&quot;, &quot;GZMK&quot;, &quot;GZMA&quot;,&quot;ZNF683&quot;,&quot;KLRC2&quot;, &quot;MS4A1&quot;, &quot;PF4&quot;, &quot;MNDA&quot;,&quot;HDC&quot;,&quot;HBB&quot;)
+</pre></div>
+</div>
+<p>This command creates a list of genes that help identify major immune cell types.
+For example: <br>
+CD3E is a commonly known gene expressed in T cells.</p>
+<p>HBB is a commonly known gene expressed in red blood cells.</p>
+<p>PF4 is a commonly known gene expressed in platelets.</p>
+</section>
+<section id="feature-plots-and-cluster-labeling">
+<h2>Feature Plots and Cluster Labeling<a class="headerlink" href="#feature-plots-and-cluster-labeling" title="Link to this heading">#</a></h2>
+<p>Then we will use the <code class="docutils literal notranslate"><span class="pre">FeaturePlot()</span></code> Seurat command to overlay those genes on our UMAP.
+<a class="reference external" href="https://satijalab.org/seurat/reference/featureplot">Click here to visit the documentation for the Feature Plot</a><br></p>
+<p><code class="docutils literal notranslate"><span class="pre">FeaturePlot</span></code> is utilized to produce a visualization. In this case, a UMAP is used as the underlying image and then we show within each cell in the UMAP if the gene is being expressed and how strong it is expressed. From there, we can deduce which clusters express that gene.
+That allows us to figure out which clusters correspond to which cell type.
+Try this now!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">annotategenes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s try to find Naive T-cells with a list of genes: LEF1 and T-cell general gene marker CD3E.<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;LEF1&quot;</span><span class="p">,</span> <span class="s2">&quot;CD3E&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you can see LEF1 is mostly in cluster 0 so this means the new names should be Naive T-cells.<br>
+<img alt="TutorialFeaturePlotExample.png" src="_images/TutorialFeaturePlotExample.png" /></p>
+<p>Let’s try to find Activated T-cells: NKG7, GZMA, CCL5, PRF1, CD3E, GNLY, GZMH, GZMK<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;CD3E&quot;</span><span class="p">,</span> <span class="s2">&quot;CD3G&quot;</span> <span class="p">,</span><span class="s2">&quot;NKG7&quot;</span><span class="p">,</span> <span class="s2">&quot;GZMA&quot;</span><span class="p">,</span> <span class="s2">&quot;CCL5&quot;</span><span class="p">,</span> <span class="s2">&quot;PRF1&quot;</span><span class="p">,</span> <span class="s2">&quot;GNLY&quot;</span><span class="p">,</span> <span class="s2">&quot;GZMH&quot;</span><span class="p">,</span> <span class="s2">&quot;GZMK&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Only those cells expressing CD3E or CD3G are from there we can see those residing in cluster 1 and 5 have GZMK, PRF1 and more. Perhaps one is activated and one is more NKT-cell like.</p>
+<p>Let’s try to find NKT cells: NKG7, GZMM, GNLY<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;NKG7&quot;</span><span class="p">,</span><span class="s2">&quot;GZMM&quot;</span><span class="p">,</span> <span class="s2">&quot;GNLY&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>These seem higher in 1, so 5 will be activated and cluster 1 will be NKT-cells.</p>
+<p>Let’s try to find NK cells: NKG7, GNLY, GZMH<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;NKG7&quot;</span><span class="p">,</span> <span class="s2">&quot;GNLY&quot;</span><span class="p">,</span> <span class="s2">&quot;GZMH&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These seem highest in 2 and 6 clusters, perhaps one cluster represents more activated NK cells.</p>
+<p>Let’s try to find Activated NK cells: NKG7, GNLY, GZMK, CD3E<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;NKG7&quot;</span><span class="p">,</span><span class="s2">&quot;GNLY&quot;</span><span class="p">,</span> <span class="s2">&quot;GZMK&quot;</span><span class="p">,</span> <span class="s2">&quot;PRF1&quot;</span><span class="p">,</span> <span class="s2">&quot;CCL4&quot;</span><span class="p">,</span> <span class="s2">&quot;G0S2&quot;</span><span class="p">,</span> <span class="s2">&quot;GZMB&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This one is harder to differentiate, so a violin plot can be utilized in this case.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VlnPlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;NKG7&quot;</span><span class="p">,</span><span class="s2">&quot;GNLY&quot;</span><span class="p">,</span> <span class="s2">&quot;GZMK&quot;</span><span class="p">,</span> <span class="s2">&quot;PRF1&quot;</span><span class="p">,</span> <span class="s2">&quot;CCL4&quot;</span><span class="p">,</span> <span class="s2">&quot;G0S2&quot;</span><span class="p">,</span> <span class="s2">&quot;GZMB&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It looks higher in 2 than 6, thus cluster 2 will be activated NK-Cells and cluster 6 will be NK.</p>
+<p>Let’s try to find Naïve B-Cell: CD79A, TCL1A, MS4A1<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;CD79A&quot;</span><span class="p">,</span> <span class="s2">&quot;TCL1A&quot;</span><span class="p">,</span> <span class="s2">&quot;MS4A1&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<details>
+<summary>What cluster would be Naïve B-cells?</summary>
+<p>Cluster 3.</p>
+</details>
+<br>
+<br>
+<p>Let’s try to find neutrophils: MNDA<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span> <span class="s2">&quot;MNDA&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<details>
+<summary>What cluster would be Neutrophils?</summary>
+<p>Cluster 4.</p>
+</details>
+<br>
+<br>
+<p>Let’s try to find platelets: PF4, MYLK, MYL9<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;PF4&quot;</span><span class="p">,</span> <span class="s2">&quot;MYLK&quot;</span><span class="p">,</span> <span class="s2">&quot;MYL9&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<details>
+<summary>What cluster would be platelets?</summary>
+<p>Cluster 7.</p>
+</details>
+<br>
+<br>
+<p>Let’s try to find Mast cells/Basophils: HDC, IL3RA<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;HDC&quot;</span><span class="p">,</span> <span class="s2">&quot;IL3RA&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<details>
+<summary>What cluster would be Basophils?</summary>
+<p>Cluster 8.</p>
+</details>
+<br>
+<br>
+<p>Let’s try to find Memory B cells: CD27, XBP1, CD3E, GNLY<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;CD27&quot;</span><span class="p">,</span> <span class="s2">&quot;XBP1&quot;</span><span class="p">,</span> <span class="s2">&quot;CD3E&quot;</span><span class="p">,</span> <span class="s2">&quot;GNLY&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<details>
+<summary>What cluster would be Memory B-cells?</summary>
+<p>Cluster 9.</p>
+</details>
+<br>
+<br>
+<p>Let’s try to find dying cells: percent.mt<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span> <span class="s2">&quot;percent.mt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<details>
+<summary>What cluster would be dying cells?</summary>
+<p>Cluster 10.</p>
+</details>
+<br>
+<br>
+<p>Let’s try to find pDCs: LILRA4, TCF4, IL3RA<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;LILRA4&quot;</span><span class="p">,</span> <span class="s2">&quot;TCF4&quot;</span><span class="p">,</span> <span class="s2">&quot;IL3RA&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<details>
+<summary>What cluster would be pDCs?</summary>
+<p>Cluster 11.</p>
+</details>
+<br>
+<br>
+<p>Let’s try to find Macrophage/Monocytes: CD14, FCN1<br>
+Make a feature plot of these genes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;CD14&quot;</span><span class="p">,</span> <span class="s2">&quot;FCN1&quot;</span><span class="p">),</span><span class="n">label</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<details>
+<summary>What cluster would be Macrophage/Monocytes?</summary>
+<p>Cluster 12.</p>
+</details>
+<br>
+<br>
+Let's try to find RBCs: HBB, HBD<br>
+Make a feature plot of these genes:
+```
+FeaturePlot(so2, features=c("HBB", "HBD"),label = TRUE)
+```
+<details>
+<summary>What cluster would be RBCs?</summary>
+<p>Cluster 13.</p>
+</details>
+<br>
+Let's try to find Plasmablasts: TNFRSF17, CHAC2, IGHA1<br>
+Make a feature plot of these genes:
+```
+FeaturePlot(so2, features = c("TNFRSF17","CHAC2","IGHA1"),label = TRUE)
+```
+<details>
+<summary>What cluster would be Plasmablasts?</summary>
+<p>Cluster 14.</p>
+</details>
+<br>
+<br>
+Now we can create an organized annotation list with the clusters original ids, their corresponding cell type, and genes found within that cluster. <br>
+<p>Cluster 0 -Naive T-Cells (LEF1)<br>
+Cluster 1- NKT-Cells (NKG7,KLRB1,GZMM)<br><br />
+Cluster 2-Activated NK-Cells (NKG7, G0S2, GZMA, GZMB, GZMH, PRF1, CCL4)<br>
+Cluster 3-B Cells  (CD79A, TCL1A, MS4A1) <br>
+Cluster 4- Neutrophil (MNDA)<br>
+Cluster 5- Activated T-cells CD3G, NKG7, GZMA, CCL5, GZMH, PRF1.<br><br />
+Cluster 6 -NK-Cells (NKG7, GZMH, NCAM1, KLRD1)<br>
+Cluster 7- Platelets (PF4, MYLK, MYL9)<br>
+Cluster 8- Mast/Basophil(CPA3, HDC, FCER1A, IL3RA)<br>
+Cluster 9- Memory B-Cell CD27, XBP1, CLEC2D, SSPN, CD3E <br>
+Cluster 10- Dying Cells (<a class="reference external" href="http://percent.mt">percent.mt</a>)<br>
+Cluster 11- pDC (LILRA4, *TCF4, *IL3RA-all 3 in sheet say dendritic as well).<br>
+Cluster 12- Macrophage/Monocyte (CD14,FCN1)<br>
+Cluster 13- RBCs (HBB,HBD)<br>
+Cluster 14- Plasmablasts TNFRSF17, CHAC2, IGHA1<br>
+Cluster 15 - ?</p>
+</section>
+<section id="unbiased-list-of-genes-associated-with-each-cluster-through-seurat-s-findmarkers">
+<h2>Unbiased list of genes associated with each cluster through Seurat’s FindMarkers<a class="headerlink" href="#unbiased-list-of-genes-associated-with-each-cluster-through-seurat-s-findmarkers" title="Link to this heading">#</a></h2>
+<p>Based on our previous knowledge and marker list there is only one cluster unknown, cluster 15.<br>
+On the UMAP it resides within an NK cell cluster, but also close to dying cells.<br>
+Lets use a statistical test for what genes differentiate each cluster <code class="docutils literal notranslate"><span class="pre">FindAllMarkers</span></code> <br></p>
+<p><a class="reference external" href="https://satijalab.org/seurat/reference/findallmarkers">Click here to visit the documentation for FindAllMarkers() to get the gene expression markers for all identity classes</a><br>
+This compares all clusters to each other and defines genes that are associated with each cluster.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">marksf</span> <span class="o">&lt;-</span> <span class="n">FindAllMarkers</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">only</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="save-your-file">
+<h3>Save your File<a class="headerlink" href="#save-your-file" title="Link to this heading">#</a></h3>
+<p>Because this is a table and not a complicated R structure such as our seurat object, we can just save it as a text file.
+<a class="reference external" href="https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/write.table">Click here to visit the documentation for write.table() </a><br></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">write</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">marksf</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span><span class="s2">&quot;finalallmarkerfile.txt&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="n">F</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Open the file you created and if you scroll to cluster 15, the top gene is FGFBP1 and then many T-cell Receptor genes along with WFDC2</p>
+</section>
+</section>
+<section id="exploring-gene-information-through-the-use-of-databases">
+<h2>Exploring gene information through the use of databases<a class="headerlink" href="#exploring-gene-information-through-the-use-of-databases" title="Link to this heading">#</a></h2>
+<section id="the-human-protein-atlas">
+<h3>The Human Protein Atlas<a class="headerlink" href="#the-human-protein-atlas" title="Link to this heading">#</a></h3>
+<p>There are many databases that gather biology gene based information. Let’s explore a few to see if we can figure out what the top genes from cluster 15 could suggest.<br></p>
+<p>The Human Protein Atlas is an open access database that shows where every human protein is found in the body, in which tissues, which cell types, and where within the cell.
+However, it also houses RNA based information in its single cell sections <br>
+Let’s navigate to FGFBP1.<br></p>
+<p><a class="reference external" href="https://www.proteinatlas.org/ENSG00000137440-FGFBP1/single+cell">Click here to visit the documentation the Protein Atlas for FGFBP1</a></p>
+<p>Under the Monaco and Schmiedel dataset, it shows that it can be in NK cells and some gamma-delta T-cells.<br></p>
+<p>What does the human tissue atlas single cell sections say about WFDC2? Enter WFDC2 in the human protein atlas tool bar.<br>
+<img alt="TutorialHumanProteinAtlasExample.png" src="_images/TutorialHumanProteinAtlasExample.png" /></p>
+<p>Select the first gene by clicking on its name.
+Then navigate to the single cell data by clicking on the box to the right of summary that says single cell. <br>
+Scroll down to the immune cell section. <br></p>
+<p>Try on your own: <br>
+Choose a specific cluster and its associated gene. <br>
+Input the gene into the Human Protein Atlas to check if your annotation is correct.<br></p>
+<p>If we are still unsure, in order to differentiate between specific clusters instead of all, you can also use direct cluster to cluster comparisons with <code class="docutils literal notranslate"><span class="pre">FindMarkers</span></code>.
+<a class="reference external" href="https://satijalab.org/seurat/reference/findmarkers">Click here to visit the documentation FindMarkers</a></p>
+</section>
+<section id="comparison-of-clusters-6-and-15">
+<h3>Comparison of clusters 6 and 15<a class="headerlink" href="#comparison-of-clusters-6-and-15" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">marks_compare</span> <span class="o">&lt;-</span> <span class="n">FindMarkers</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">ident</span><span class="mf">.1</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">ident</span><span class="mf">.2</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The top genes seem to be T-cell Receptor alpha and beta genes, including TRAV12-3.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FeaturePlot</span><span class="p">(</span><span class="n">so2</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span> <span class="s2">&quot;TRAV12-3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This would rule out cluster 15 being gamma delta T-cells as they are using alpha-beta chains. <br>
+However, we also see lots of genes starting with RPL, which are ribosome proteins and suggest they may be under stress, perhaps due to closeness to our dying cells, these are dying T-cells.</p>
+</section>
+</section>
+<section id="rename-clusters-by-cell-type">
+<h2>Rename Clusters by Cell Type<a class="headerlink" href="#rename-clusters-by-cell-type" title="Link to this heading">#</a></h2>
+<p>Here we will create data that lists each new cell identification by creating a vector with the combine command <code class="docutils literal notranslate"><span class="pre">c()</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new</span><span class="o">.</span><span class="n">ids</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;Naïve T-cells&quot;</span><span class="p">,</span> <span class="s2">&quot;NKT-cells&quot;</span><span class="p">,</span> <span class="s2">&quot;Activated NK-cells&quot;</span><span class="p">,</span> <span class="s2">&quot;B-cells&quot;</span><span class="p">,</span><span class="s2">&quot;Neutrophils&quot;</span><span class="p">,</span> <span class="s2">&quot;Activated T-cells&quot;</span><span class="p">,</span><span class="s2">&quot;NK-cells&quot;</span><span class="p">,</span><span class="s2">&quot;Platelets&quot;</span><span class="p">,</span><span class="s2">&quot;Mast cells and Basophils&quot;</span><span class="p">,</span> <span class="s2">&quot;Memory B-cells&quot;</span><span class="p">,</span><span class="s2">&quot;Dying cells&quot;</span><span class="p">,</span><span class="s2">&quot;pDC-cells&quot;</span><span class="p">,</span><span class="s2">&quot;Macrophages and Monocytes&quot;</span><span class="p">,</span> <span class="s2">&quot;RBCs&quot;</span><span class="p">,</span>  <span class="s2">&quot;Plasmablasts&quot;</span><span class="p">,</span> <span class="s2">&quot;Dying cells&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that here we use <code class="docutils literal notranslate"><span class="pre">&quot;Dying</span> <span class="pre">Cells&quot;</span></code> twice, so this will eventually combine these two clusters into one.</p>
+<section id="new-seurat-object">
+<h3>New Seurat Object<a class="headerlink" href="#new-seurat-object" title="Link to this heading">#</a></h3>
+<p>We will rename the new seurat object to keep the original as is and work with a new version “so_v1”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">so_v1</span> <span class="o">&lt;-</span> <span class="n">so2</span>
+</pre></div>
+</div>
+<p>Now we need to apply the names:
+<a class="reference external" href="https://satijalab.github.io/seurat-object/reference/Idents.html">Click here to visit the documentation RenameIdents</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">names</span><span class="p">(</span><span class="n">new</span><span class="o">.</span><span class="n">ids</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">levels</span><span class="p">(</span><span class="n">so_v1</span><span class="p">)</span>
+<span class="n">so_v1</span> <span class="o">&lt;-</span> <span class="n">RenameIdents</span><span class="p">(</span><span class="n">so_v1</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">ids</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-umap-with-new-seurat-with-cluster-names">
+<h3>Plot UMAP with new Seurat with cluster names<a class="headerlink" href="#plot-umap-with-new-seurat-with-cluster-names" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DimPlot</span><span class="p">(</span><span class="n">so_v1</span><span class="p">,</span> <span class="n">reduction</span> <span class="o">=</span> <span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="save-the-object-with-new-cluster-labels">
+<h4>Save the object with new cluster labels<a class="headerlink" href="#save-the-object-with-new-cluster-labels" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">saveRDS</span><span class="p">(</span><span class="n">so_v1</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="s2">&quot;healthydonor_test_tutorial_v7.RDS&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="change-colors">
+<h3>Change Colors<a class="headerlink" href="#change-colors" title="Link to this heading">#</a></h3>
+<p>The standard colors in R are too closely related and we would like ones that shows related lineages of cells better.</p>
+<p>Search the internet for colors in R and choose which color you would like each cluster to be.<br>
+Remember to input your chosen colors in the same order as the clusters 0 to 15.<br>
+Here is an example of the code where you will input the names of each color. We will create a vector called <code class="docutils literal notranslate"><span class="pre">cols_scheme</span></code> by using the <code class="docutils literal notranslate"><span class="pre">&lt;-</span></code> (variable creation command) and <code class="docutils literal notranslate"><span class="pre">c()</span></code> combine into avector function.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cols_scheme</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;cluster1color&quot;</span><span class="p">,</span><span class="s2">&quot;cluster2color&quot;</span><span class="p">,</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now save this file as a pdf, as a reminder.<br />
+The pdf() command requires you tell it where to save the pdf. You can also state what size the pdf should be.
+Then after you give that information, any commands of visualizations that are typed afterwards will be placed into the pdf
+Then to close and turn off the pdf you type dev.off()</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pdf</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">paste</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="s2">&quot;UMAP9dim_customcolors_labeled.pdf&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">DimPlot</span><span class="p">(</span><span class="n">so_v1</span><span class="p">,</span> <span class="n">reduction</span> <span class="o">=</span> <span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">cols_scheme</span><span class="p">)</span>
+<span class="n">dev</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="make-a-violin-plot-for-others-to-show-major-cell-clusters">
+<h2>Make a violin plot for others to show major cell clusters<a class="headerlink" href="#make-a-violin-plot-for-others-to-show-major-cell-clusters" title="Link to this heading">#</a></h2>
+<section id="make-a-list-of-genes-for-a-violin-plot-to-confirm-choices">
+<h3>Make a list of genes for a Violin plot to confirm choices<a class="headerlink" href="#make-a-list-of-genes-for-a-violin-plot-to-confirm-choices" title="Link to this heading">#</a></h3>
+<p>Here we will create a new list of genes, different than our original testing annotategenes. Then we will create a violin plot but remove each dot by using that <code class="docutils literal notranslate"><span class="pre">pt.size</span></code> of the dots set to 0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dg</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;CD3E&quot;</span><span class="p">,</span> <span class="s2">&quot;CD8A&quot;</span><span class="p">,</span> <span class="s2">&quot;CD4&quot;</span><span class="p">,</span> <span class="s2">&quot;NCAM1&quot;</span><span class="p">,</span><span class="s2">&quot;NKG7&quot;</span><span class="p">,</span> <span class="s2">&quot;CD79A&quot;</span><span class="p">,</span> <span class="s2">&quot;MS4A1&quot;</span><span class="p">,</span> <span class="s2">&quot;PF4&quot;</span><span class="p">,</span> <span class="s2">&quot;PRF1&quot;</span><span class="p">,</span><span class="s2">&quot;HBB&quot;</span><span class="p">,</span> <span class="s2">&quot;MNDA&quot;</span><span class="p">,</span> <span class="s2">&quot;AIF1&quot;</span><span class="p">,</span> <span class="s2">&quot;LEF1&quot;</span><span class="p">,</span> <span class="s2">&quot;CD14&quot;</span><span class="p">,</span> <span class="s2">&quot;IL7R&quot;</span><span class="p">,</span><span class="s2">&quot;ZNF683&quot;</span><span class="p">,</span><span class="s2">&quot;FCGR3A&quot;</span><span class="p">,</span><span class="s2">&quot;FCER1A&quot;</span><span class="p">)</span> 
+<span class="n">VlnPlot</span><span class="p">(</span><span class="n">so_v1</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">dg</span><span class="p">,</span> <span class="n">pt</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Clustering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Clustering</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Validation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Validation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-the-wiselab-s-data-object-for-analysis">Download the WiseLab’s Data Object for Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labeling-of-cell-clusters-to-known-blood-based-cell-types">Labeling of cell clusters to known blood-based cell types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-plots-and-cluster-labeling">Feature Plots and Cluster Labeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unbiased-list-of-genes-associated-with-each-cluster-through-seurat-s-findmarkers">Unbiased list of genes associated with each cluster through Seurat’s FindMarkers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-your-file">Save your File</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-gene-information-through-the-use-of-databases">Exploring gene information through the use of databases</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-human-protein-atlas">The Human Protein Atlas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-clusters-6-and-15">Comparison of clusters 6 and 15</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rename-clusters-by-cell-type">Rename Clusters by Cell Type</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-seurat-object">New Seurat Object</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-umap-with-new-seurat-with-cluster-names">Plot UMAP with new Seurat with cluster names</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#save-the-object-with-new-cluster-labels">Save the object with new cluster labels</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#change-colors">Change Colors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-violin-plot-for-others-to-show-major-cell-clusters">Make a violin plot for others to show major cell clusters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-list-of-genes-for-a-violin-plot-to-confirm-choices">Make a list of genes for a Violin plot to confirm choices</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sofia Neary, Kenia Viri, Jackson Brenek, Jacquie Tremblay, Isaac Rivera and Jillian Wise, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
