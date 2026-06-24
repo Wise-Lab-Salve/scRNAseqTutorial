@@ -1,4 +1,3 @@
-yaml
 name: Deploy Sphinx Docs to Pages
 
 on:
